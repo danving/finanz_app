@@ -1,3 +1,4 @@
+import 'package:finanz_app/screens/categorys_screen.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,18 +15,19 @@ Widget drawerWidget(context) {
             ),
           ),
           decoration: BoxDecoration(
-            color: Colors.green[300],
+            color: Colors.teal,
           ),
         ),
-        drawerList(context, "Home", HomeScreen()),
+        drawerList(context, "Home", HomeScreen(), Icon(Icons.home)),
+        drawerList(context, "Kategorien", CategorysScreen(), Icon(Icons.apps)),
       ],
     ),
   );
 }
 
-Widget drawerList(context, name, link) {
+Widget drawerList(context, name, link, icon) {
   return ListTile(
-    trailing: Icon(Icons.home),
+    trailing: icon,
     title: Text(name),
     onTap: () {
       Navigator.pop(context);
