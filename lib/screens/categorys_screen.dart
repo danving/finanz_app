@@ -18,16 +18,16 @@ class _CategorysScreenState extends State<CategorysScreen> {
           crossAxisCount: 2,
           padding: EdgeInsets.all(2),
           children: <Widget>[
-            categoryCard(Colors.blue[200], "assets/svg/briefcase.svg", "Arbeit"),
-            categoryCard(Colors.purple[300], "assets/svg/home.svg", "Haushalt"),
-            categoryCard(Colors.grey[500], "assets/svg/car.svg", "Mobilität"),
-            categoryCard(Colors.green[400], "assets/svg/airport.svg", "Reisen"),
-            categoryCard(Colors.cyanAccent[100], "assets/svg/school.svg", "Uni"),
-            categoryCard(Colors.pink[400], "assets/svg/cloth.svg", "Kleidung"),
-            categoryCard(Colors.brown[400], "assets/svg/food.svg", "Essen"),
-            categoryCard(Colors.deepOrange, "assets/svg/party.svg", "Freizeit"),
-            categoryCard(Colors.red[500], "assets/svg/media.svg", "Medien"),
-            categoryCard(Colors.amber[300], "assets/svg/present.svg", "Geschenke"),
+            categoryCard(Colors.white, "assets/svg/briefcase.svg", "Arbeit"),
+            categoryCard(Colors.white, "assets/svg/home.svg", "Haushalt"),
+            categoryCard(Colors.white, "assets/svg/car.svg", "Mobilität"),
+            categoryCard(Colors.white, "assets/svg/airport.svg", "Reisen"),
+            categoryCard(Colors.white, "assets/svg/school.svg", "Uni"),
+            categoryCard(Colors.white, "assets/svg/cloth.svg", "Kleidung"),
+            categoryCard(Colors.white, "assets/svg/food.svg", "Essen"),
+            categoryCard(Colors.white, "assets/svg/party.svg", "Freizeit"),
+            categoryCard(Colors.white, "assets/svg/media.svg", "Medien"),
+            categoryCard(Colors.white, "assets/svg/present.svg", "Geschenke"),
           ],
         ),
       ),
@@ -43,7 +43,6 @@ class _CategorysScreenState extends State<CategorysScreen> {
           Navigator.pop(context);
         },
         child: Container(
-          width: 200,
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),

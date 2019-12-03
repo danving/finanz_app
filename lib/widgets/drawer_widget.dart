@@ -1,4 +1,5 @@
 import 'package:finanz_app/screens/categorys_screen.dart';
+import 'package:finanz_app/screens/categorys_screen2.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ Widget drawerWidget(context) {
           ),
         ),
         drawerList(context, "Home", HomeScreen(), Icon(Icons.home)),
-        drawerList(context, "Kategorien", CategorysScreen(), Icon(Icons.apps)),
+        drawerList(context, "Kategorien", CategorysScreen2(), Icon(Icons.apps)),
       ],
     ),
   );
