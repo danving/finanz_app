@@ -10,17 +10,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double konto = 40.01;
-  TextEditingController _updateKonto;
+  TextEditingController _addKonto;
+  TextEditingController _removeKonto;
 
   @override
   void initState() {
-    _updateKonto = new TextEditingController();
+    _addKonto = new TextEditingController();
+    _removeKonto = new TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _updateKonto?.dispose();
+    _addKonto?.dispose();
+    _removeKonto?.dispose();
     super.dispose();
   }
 
@@ -56,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: <Widget>[
                   Spacer(),
-                  button(Icons.add, Colors.white, Colors.greenAccent,
+                  button(Icons.add, Colors.white, Colors.green[600],
                       _displayAddDialog, context),
                   Spacer(),
                   button(Icons.remove, Colors.white, Colors.red,
@@ -98,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    controller: _updateKonto,
+                    controller: _addKonto,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: "Betrag",
@@ -119,7 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text("Einzahlen"),
                 onPressed: () {
                   setState(() {
-                    konto += double.parse(_updateKonto.text);
+                    konto += double.parse(_addKonto.text);
+                    _addKonto.clear();
                   });
                   Navigator.pop(context);
                 },
@@ -140,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    controller: _updateKonto,
+                    controller: _removeKonto,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: "Betrag",
@@ -161,7 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text("Ausgabe"),
                 onPressed: () {
                   setState(() {
-                    konto -= double.parse(_updateKonto.text);
+                    konto -= double.parse(_removeKonto.text);
+                    _removeKonto.clear();
                   });
                   Navigator.pop(context);
                 },
