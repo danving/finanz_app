@@ -10,11 +10,11 @@ class Konto{
   }
 
   num getKontostand(){
-    /*_kontostand = 0;
+    _kontostand = 0;
     for(int i = 0; i < eintraege.length; i++){
       _kontostand += eintraege[i].getBetrag();
-    }*/
-    _kontostand +=eintraege[eintraege.length-1].getBetrag();
+    }
+    //_kontostand +=eintraege[eintraege.length-1].getBetrag();
 
     return _kontostand;
   }
