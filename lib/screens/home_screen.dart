@@ -1,9 +1,9 @@
 import 'package:finanz_app/model/eintrag.dart';
-import 'package:finanz_app/model/konto.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:finanz_app/model/data_model.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,7 +15,8 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _removeKonto;
 
   //num konto = 40.01;
-  Konto konto = new Konto(0.00);
+
+
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: Text(
                     //konto.toStringAsFixed(2),
-                    konto.getKontostand().toStringAsFixed(2),
+                    DataModel.konto.getKontostand().toStringAsFixed(2),
                     style: TextStyle(fontSize: 40),
                   ),
                 ),
@@ -77,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       drawer: drawerWidget(context),
+      bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
 
@@ -128,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   setState(() {
                     //konto += double.parse(_addKonto.text);
-                    konto.addEintrag(new Eintrag(false, num.parse(_addKonto.text), "Essen"));
+                    DataModel.konto.addEintrag(new Eintrag(false, num.parse(_addKonto.text), "Essen"));
 
                     _addKonto.clear();
                   });
@@ -173,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   setState(() {
                     //konto -= double.parse(_removeKonto.text);
-                    konto.addEintrag(new Eintrag(true, num.parse(_removeKonto.text), "Essen"));
+                    DataModel.konto.addEintrag(new Eintrag(true, num.parse(_removeKonto.text), "Essen"));
                     _removeKonto.clear();
                   });
                   Navigator.pop(context);

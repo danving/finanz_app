@@ -1,3 +1,4 @@
+import 'package:finanz_app/screens/category_food_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _CategorysScreenState extends State<CategorysScreen> {
       padding: const EdgeInsets.all(2.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.pop(context);
+          FoodCategoryScreen();
         },
         child: Container(
           child: Card(

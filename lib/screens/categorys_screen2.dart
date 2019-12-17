@@ -1,3 +1,4 @@
+import 'package:finanz_app/screens/category_food_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,12 @@ class _CategorysScreen2State extends State<CategorysScreen2> {
 
   Widget categoryList(title, image) {
     return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FoodCategoryScreen()),
+          );
+        },
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

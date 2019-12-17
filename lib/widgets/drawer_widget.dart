@@ -31,7 +31,6 @@ Widget drawerList(context, name, link, icon) {
     trailing: icon,
     title: Text(name),
     onTap: () {
-      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => link),

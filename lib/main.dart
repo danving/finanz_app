@@ -1,7 +1,11 @@
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'model/data_model.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  DataModel dm = new DataModel();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
