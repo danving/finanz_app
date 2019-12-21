@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: Text(
                     //konto.toStringAsFixed(2),
-                    DataModel.konto.getKontostand().toStringAsFixed(2),
+                    DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
                     style: TextStyle(fontSize: 40),
                   ),
                 ),

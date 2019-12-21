@@ -23,4 +23,7 @@ class Konto{
     eintraege.add(newEintag);
   }
 
+  int getCountEintraege(){
+    return eintraege.length;
+  }
 }

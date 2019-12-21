@@ -10,13 +10,15 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
+  List<Widget> list = createList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget("Übersicht"),
-      body: Container(
-        child: Column(
+      body: SingleChildScrollView(
+        child: Container(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
@@ -33,17 +35,43 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 child: Center(
                   child: Text(
                     //konto.toStringAsFixed(2),
-                    DataModel.konto.getKontostand().toStringAsFixed(2),
+                    DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
                     style: TextStyle(fontSize: 40),
                   ),
                 ),
               ),
             ),
+            Center(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return list[index];
+                },
+              ),
+            ),
           ],
-        )
+        )),
       ),
       drawer: drawerWidget(context),
       bottomNavigationBar: bottomNavBarWidget(context),
+    );
+  }
+
+  static List createList() {
+    List<Widget> liste = new List<Widget>();
+    for (int i = DataModel.konto.getCountEintraege() - 1; i >= 0; i--) {
+      liste.add(createUebersichtEintrag(i));
+    }
+    return liste;
+  }
+
+  static Widget createUebersichtEintrag(int i) {
+    return Card(
+      child: ListTile(
+          title: Text(
+              DataModel.konto.eintraege[i].getBetrag().toStringAsFixed(2))),
     );
   }
 }
