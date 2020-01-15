@@ -25,7 +25,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
                   child: Container(
-                    width: 350,
+                    //width: 350,
                     height: 100,
                     decoration: BoxDecoration(
                       color: Colors.teal[50],

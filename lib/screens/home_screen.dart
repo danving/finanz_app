@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _initKonto;
 
   List<String> dropDownCategories = [
+    "Wähle eine Kategorie", //TODO ändern
     "Arbeit",
     "Haushalt",
     "Mobilität",
@@ -27,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
     "Medien",
     "Geschenke",
   ];
-  String tempCategorie;
+
+  dynamic tempCategorie = "Wähle eine Kategorie";
 
   bool needInit = false; //Initialisierung notwendig?
 
@@ -55,45 +57,136 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget("Home"),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Container(
-                width: 350,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.teal[50],
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.5,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Center( //Kontostandanzeige
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 10, left: 40, right: 40),
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.teal[50],
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
                   ),
                 ),
+              ), //Kontostandanzeige
+              Padding( //Betrag Eingabe
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
                 child: Center(
-                  child: Text(
-                    //konto.toStringAsFixed(2),
-                    DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
-                    style: TextStyle(fontSize: 40),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _addKonto,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      labelText: "Betrag",
+                      hintText: "1234",
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Row(
-                children: <Widget>[
-                  Spacer(),
-                  button(Icons.add, Colors.white, Colors.green[600],
-                      _displayAddDialog, context),
-                  Spacer(),
-                  button(Icons.remove, Colors.white, Colors.red,
-                      _displayRemoveDialog, context),
-                  Spacer(),
-                ],
-              ),
-            )
-          ],
+              ), //Betrag Eingabe
+              Padding( //Dropdown
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
+                child: Center(
+                  child: DropdownButton<String>(
+                    hint: Text("Wähle eine Kategorie"),
+                    value: tempCategorie,
+                    onChanged: (String newValue) {
+                      tempCategorie = newValue;//test
+                      setState(() {
+                        tempCategorie = newValue;
+                      });
+                    },
+                    items: dropDownCategories
+                        .map((String value) => DropdownMenuItem<String>(
+                            child: new Text(value), value: value))
+                        .toList(),
+                  ),
+                ),
+              ),//Dropdown
+              /*Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Row(
+                  children: <Widget>[
+                    Spacer(),
+                    button(Icons.add, Colors.white, Colors.green[600],
+                        _displayAddDialog, context),
+                    Spacer(),
+                    button(Icons.remove, Colors.white, Colors.red,
+                        _displayRemoveDialog, context),
+                    Spacer(),
+                  ],
+                ),
+              ),*/ //NOT USED
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0, bottom: 10, left: 40, right: 40),
+                child: Row(
+                  children: <Widget>[
+                    Spacer(),
+                    RawMaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          DataModel.konto.addEintrag(new Eintrag(
+                              false,
+                              num.parse(_addKonto.text),
+                              tempCategorie,
+                              new DateTime.now()));
+                          tempCategorie = "Wähle eine Kategorie";
+                          _addKonto.clear();
+                        });
+                        //Navigator.pop(context);
+                      },
+                      child: new Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 50.0,
+                      ),
+                      shape: new CircleBorder(),
+                      elevation: 6.0,
+                      fillColor: Colors.green[600],
+                      padding: const EdgeInsets.all(15.0),
+                    ),
+                    Spacer(),
+                    RawMaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          DataModel.konto.addEintrag(new Eintrag(
+                              true,
+                              num.parse(_addKonto.text),
+                              tempCategorie,
+                              new DateTime.now()));
+                          _addKonto.clear();
+                        });
+                        //Navigator.pop(context);
+                      },
+                      child: new Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                        size: 50.0,
+                      ),
+                      shape: new CircleBorder(),
+                      elevation: 6.0,
+                      fillColor: Colors.red,
+                      padding: const EdgeInsets.all(15.0),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       drawer: drawerWidget(context),
@@ -114,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
       fillColor: color2,
       padding: const EdgeInsets.all(15.0),
     );
-  }
+  }//NOT IN USE
 
   _displayAddDialog(BuildContext context) async {
     await showDialog(
@@ -177,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
-  }
+  } //NOT USED
 
   _displayRemoveDialog(BuildContext context) async {
     await showDialog(
@@ -224,7 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
-  }
+  } //NOT USED
 
   _displayInitDialog(BuildContext context) async {
     await showDialog(
