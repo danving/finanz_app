@@ -13,15 +13,33 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _addKonto;
   TextEditingController _removeKonto;
+  TextEditingController _initKonto;
 
-  //num konto = 40.01;
+  List<String> dropDownCategories = [
+    "Arbeit",
+    "Haushalt",
+    "Mobilität",
+    "Reisen",
+    "Uni",
+    "Kleidung",
+    "Essen",
+    "Freizeit",
+    "Medien",
+    "Geschenke",
+  ];
+  String tempCategorie;
 
-
+  bool needInit = false; //Initialisierung notwendig?
 
   @override
   void initState() {
     _addKonto = new TextEditingController();
     _removeKonto = new TextEditingController();
+    _initKonto = new TextEditingController();
+    if (needInit)
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _displayInitDialog(context)); //TODO evtl.als mounted property?
+
     super.initState();
   }
 
@@ -29,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _addKonto?.dispose();
     _removeKonto?.dispose();
+    _initKonto?.dispose();
     super.dispose();
   }
 
@@ -103,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) {
           return AlertDialog(
             title: Text("Einzahlung"),
-            content: Row(
+            content: Column(
               children: <Widget>[
                 Expanded(
                   child: TextField(
@@ -116,6 +135,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: DropdownButton(
+                    //TODO DROPDOWN MENU
+                    hint: Text("Wähle eine Kategorie"),
+                    value: tempCategorie,
+                    onChanged: (newValue) {
+                      setState(() {
+                        tempCategorie = newValue;
+                      });
+                    },
+                    items: dropDownCategories
+                        .map((location) => DropdownMenuItem<String>(
+                            child: new Text(location), value: location))
+                        .toList(),
+                  ),
+                )
               ],
             ),
             actions: <Widget>[
@@ -129,9 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text("Einzahlen"),
                 onPressed: () {
                   setState(() {
-                    //konto += double.parse(_addKonto.text);
-                    DataModel.konto.addEintrag(new Eintrag(false, num.parse(_addKonto.text), "Essen"));
-
+                    DataModel.konto.addEintrag(new Eintrag(
+                        false,
+                        num.parse(_addKonto.text),
+                        "Essen",
+                        new DateTime.now()));
                     _addKonto.clear();
                   });
                   Navigator.pop(context);
@@ -174,8 +211,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text("Ausgabe"),
                 onPressed: () {
                   setState(() {
-                    //konto -= double.parse(_removeKonto.text);
-                    DataModel.konto.addEintrag(new Eintrag(true, num.parse(_removeKonto.text), "Essen"));
+                    DataModel.konto.addEintrag(new Eintrag(
+                        true,
+                        num.parse(_removeKonto.text),
+                        "Essen",
+                        new DateTime.now()));
                     _removeKonto.clear();
                   });
                   Navigator.pop(context);
@@ -186,4 +226,47 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
+  _displayInitDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Willkommen..."),
+            content: Column(
+              children: <Widget>[
+                Expanded(
+                    child: Text(
+                        "Danke fürs Runterladen unserer App. Hoffentlich reichts...")),
+                Expanded(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _initKonto,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      labelText: "Initial-Kontostand",
+                      hintText: "1000",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Kontostand übernehmen"),
+                onPressed: () {
+                  setState(() {
+                    DataModel.konto.addEintrag(new Eintrag(
+                        false,
+                        num.parse(_initKonto.text),
+                        "Essen",
+                        new DateTime.now()));
+                    _initKonto.clear();
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
 }

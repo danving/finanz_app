@@ -6,7 +6,15 @@ class Konto{
 
   Konto(num kontostand){
     this._kontostand = kontostand;
-    addEintrag(new Eintrag(false, 0.0, "Init"));
+    addEintrag(new Eintrag(false, 0.0, "Init", new DateTime.now()));
+  }
+
+  Konto.json({this.eintraege,});
+
+  factory Konto.fromJson(List<dynamic> parsedJson){
+    List<Eintrag> eintraege = new List<Eintrag>();
+
+    return new Konto.json(eintraege: eintraege);
   }
 
   num getKontostand(){
@@ -14,8 +22,6 @@ class Konto{
     for(int i = 0; i < eintraege.length; i++){
       _kontostand += eintraege[i].getBetrag();
     }
-    //_kontostand +=eintraege[eintraege.length-1].getBetrag();
-
     return _kontostand;
   }
 
