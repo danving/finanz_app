@@ -22,7 +22,7 @@ Widget drawerWidget(context) {
         ),
         drawerList(context, "Home", HomeScreen(), Icon(Icons.home)),
         drawerList(context, "Übersicht", OverviewScreen(), Icon(Icons.view_list)), //ToDo
-        drawerList(context, "Kategorien", CategorysScreen2(), Icon(Icons.apps)),
+        drawerList(context, "Kategorien", CategoriesScreen(), Icon(Icons.apps)),
       ],
     ),
   );

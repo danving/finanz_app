@@ -39,7 +39,7 @@ class DataModel{
   static final pages = <Widget> [
     HomeScreen(),
     OverviewScreen(),
-    CategorysScreen2() //ToDo
+    CategoriesScreen() //ToDo
   ];
 
 }

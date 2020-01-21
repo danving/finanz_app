@@ -12,12 +12,12 @@ class Cat{                //ToDo
   Cat(this.category);
 }
 
-class CategorysScreen2 extends StatefulWidget { //ToDo ändern in CategoriesScreen
+class CategoriesScreen extends StatefulWidget { //ToDo ändern in CategoriesScreen
   @override
-  _CategorysScreen2State createState() => _CategorysScreen2State();
+  _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
-class _CategorysScreen2State extends State<CategorysScreen2> {
+class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
