@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Kontostandanzeige
+              //ToDo Textfield mit Verwendungszweck
               Padding(
                 //Betrag Eingabe
                 padding: const EdgeInsets.only(
@@ -97,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: false,
                     decoration: InputDecoration(
                       labelText: "Betrag",
-                      hintText: "1234",
+                      hintText: "00.00", //ToDo
                     ),
                   ),
                 ),
@@ -123,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Dropdown
+
               /*Padding(
                 padding: const EdgeInsets.only(top: 50.0),
                 child: Row(

@@ -2,6 +2,8 @@ import 'package:finanz_app/screens/categories_screen.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/overview_screen.dart';
+
 Widget drawerWidget(context) {
   return Drawer(
     child: ListView(
@@ -19,6 +21,7 @@ Widget drawerWidget(context) {
           ),
         ),
         drawerList(context, "Home", HomeScreen(), Icon(Icons.home)),
+        drawerList(context, "Übersicht", OverviewScreen(), Icon(Icons.view_list)), //ToDo
         drawerList(context, "Kategorien", CategorysScreen2(), Icon(Icons.apps)),
       ],
     ),
