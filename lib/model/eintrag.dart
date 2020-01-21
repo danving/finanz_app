@@ -23,6 +23,14 @@ class Eintrag {
     );
   }
 
+  Map<String, dynamic> toJson() =>
+      {
+        'minus': _minus,
+        'betrag': _betrag,
+        'categorie': _category,
+        'date': _datum.toIso8601String(),
+      };
+
   num getBetrag() {
     if (_minus)
       return _betrag * -1;

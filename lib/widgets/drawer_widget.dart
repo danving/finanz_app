@@ -1,5 +1,4 @@
-import 'package:finanz_app/screens/categorys_screen.dart';
-import 'package:finanz_app/screens/categorys_screen2.dart';
+import 'package:finanz_app/screens/categories_screen.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 

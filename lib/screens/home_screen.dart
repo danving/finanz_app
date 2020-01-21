@@ -62,9 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Center( //Kontostandanzeige
+              Center(
+                //Kontostandanzeige
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 10, left: 40, right: 40),
+                  padding: const EdgeInsets.only(
+                      top: 20.0, bottom: 10, left: 40, right: 40),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -76,15 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
+                        DataModel.konto.getKontostand().toStringAsFixed(2) +
+                            " €",
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
                   ),
                 ),
               ), //Kontostandanzeige
-              Padding( //Betrag Eingabe
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
+              Padding(
+                //Betrag Eingabe
+                padding: const EdgeInsets.only(
+                    top: 10.0, bottom: 10, left: 40, right: 40),
                 child: Center(
                   child: TextField(
                     keyboardType: TextInputType.number,
@@ -97,14 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Betrag Eingabe
-              Padding( //Dropdown
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10, left: 40, right: 40),
+              Padding(
+                //Dropdown
+                padding: const EdgeInsets.only(
+                    top: 10.0, bottom: 10, left: 40, right: 40),
                 child: Center(
                   child: DropdownButton<String>(
                     hint: Text("Wähle eine Kategorie"),
                     value: tempCategorie,
                     onChanged: (String newValue) {
-                      tempCategorie = newValue;//test
+                      tempCategorie = newValue; //test
                       setState(() {
                         tempCategorie = newValue;
                       });
@@ -115,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .toList(),
                   ),
                 ),
-              ),//Dropdown
+              ), //Dropdown
               /*Padding(
                 padding: const EdgeInsets.only(top: 50.0),
                 child: Row(
@@ -131,7 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),*/ //NOT USED
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 10, left: 40, right: 40),
+                padding: const EdgeInsets.only(
+                    top: 30.0, bottom: 10, left: 40, right: 40),
                 child: Row(
                   children: <Widget>[
                     Spacer(),
@@ -182,9 +190,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(15.0),
                     ),
                     Spacer(),
+                    RawMaterialButton(
+                      onPressed: () {
+                        DataModel.konto.writeKontostand();
+                      },
+                      child: new Icon(Icons.print),
+                      shape: new CircleBorder(),
+                      elevation: 6.0,
+                      fillColor: Colors.blue,
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -194,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget button(icon, color1, color2, dialog, context) {
+/*  Widget button(icon, color1, color2, dialog, context) {
     return RawMaterialButton(
       onPressed: () => dialog(context),
       child: new Icon(
@@ -207,8 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
       fillColor: color2,
       padding: const EdgeInsets.all(15.0),
     );
-  }//NOT IN USE
+  }
 
+ */
+/*
   _displayAddDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -270,8 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
-  } //NOT USED
-
+  } */
+/*
   _displayRemoveDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -317,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         });
-  } //NOT USED
+  } */
 
   _displayInitDialog(BuildContext context) async {
     await showDialog(

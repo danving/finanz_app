@@ -1,12 +1,21 @@
-import 'eintrag.dart';
+import 'dart:io';
 
-class Konto{
+import 'eintrag.dart';
+import 'storage.dart';
+
+
+class Konto {
   num _kontostand;
   List<Eintrag> eintraege = [];
 
+  //Storage
+  final Storage storage = new Storage();
+  String state;
+  Future<Directory> _appDocDir;
+
   Konto(num kontostand){
     this._kontostand = kontostand;
-    addEintrag(new Eintrag(false, 0.0, "Init", new DateTime.now()));
+    //addEintrag(new Eintrag(false, 0.0, "Init", new DateTime.now()));
   }
 
   Konto.json({this.eintraege,});
@@ -22,6 +31,7 @@ class Konto{
     for(int i = 0; i < eintraege.length; i++){
       _kontostand += eintraege[i].getBetrag();
     }
+    //return _kontostand;
     return _kontostand;
   }
 
@@ -32,4 +42,15 @@ class Konto{
   int getCountEintraege(){
     return eintraege.length;
   }
+
+  void initKonto(){
+    storage.readData().then((String value){
+      state = value;
+    });
+  }
+
+  void writeKontostand(){
+    storage.writeData(_kontostand.toString());
+  }
+
 }
