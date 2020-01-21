@@ -12,7 +12,7 @@ class Cat{                //ToDo
   Cat(this.category);
 }
 
-class CategoriesScreen extends StatefulWidget { //ToDo ändern in CategoriesScreen
+class CategoriesScreen extends StatefulWidget {
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
