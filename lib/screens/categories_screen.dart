@@ -1,4 +1,3 @@
-import 'package:finanz_app/screens/category_food_screen.dart';
 import 'package:finanz_app/screens/category_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
@@ -25,17 +24,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: Container(
         child: ListView(
           children: <Widget>[
-            categoryList(DataModel().Categories[0], "assets/svg/briefcase.svg",DataModel().Categories[0]), //ToDo
-            categoryList(DataModel().Categories[1], "assets/svg/home.svg",DataModel().Categories[1]),
-            categoryList(DataModel().Categories[2], "assets/svg/car.svg",DataModel().Categories[2]),
-            categoryList(DataModel().Categories[3], "assets/svg/airport.svg",DataModel().Categories[3]),
-            categoryList(DataModel().Categories[4], "assets/svg/school.svg",DataModel().Categories[4]),
-            categoryList(DataModel().Categories[5], "assets/svg/cloth.svg",DataModel().Categories[5]),
-            categoryList(DataModel().Categories[6], "assets/svg/food.svg",DataModel().Categories[6]),
-            categoryList(DataModel().Categories[7], "assets/svg/party.svg",DataModel().Categories[7]),
-            categoryList(DataModel().Categories[8], "assets/svg/media.svg",DataModel().Categories[8]),
-            categoryList(DataModel().Categories[9], "assets/svg/present.svg",DataModel().Categories[9]),
-            categoryList(DataModel().Categories[10], "assets/svg/other.svg", DataModel().Categories[10]), //ToDo other svg
+            categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0]), //ToDo
+            categoryList(DataModel().categories[1], "assets/svg/home.svg",DataModel().categories[1]),
+            categoryList(DataModel().categories[2], "assets/svg/car.svg",DataModel().categories[2]),
+            categoryList(DataModel().categories[3], "assets/svg/airport.svg",DataModel().categories[3]),
+            categoryList(DataModel().categories[4], "assets/svg/school.svg",DataModel().categories[4]),
+            categoryList(DataModel().categories[5], "assets/svg/cloth.svg",DataModel().categories[5]),
+            categoryList(DataModel().categories[6], "assets/svg/food.svg",DataModel().categories[6]),
+            categoryList(DataModel().categories[7], "assets/svg/party.svg",DataModel().categories[7]),
+            categoryList(DataModel().categories[8], "assets/svg/media.svg",DataModel().categories[8]),
+            categoryList(DataModel().categories[9], "assets/svg/present.svg",DataModel().categories[9]),
+            categoryList(DataModel().categories[10], "assets/svg/other.svg", DataModel().categories[10]), //ToDo other svg
           ],
         ),
       ),

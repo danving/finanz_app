@@ -1,3 +1,5 @@
+import 'package:finanz_app/model/database.dart';
+import 'package:finanz_app/model/eintrag.dart';
 import 'package:flutter/material.dart';
 import '../model/data_model.dart';
 import '../widgets/appBar_widget.dart';
@@ -30,11 +32,7 @@ class CategoryScreen extends StatelessWidget {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        DataModel.konto.getKontostand().toStringAsFixed(2) +
-                            " €",
-                        style: TextStyle(fontSize: 40),
-                      ),
+                      child: DataModel().getKontostand(context),
                     ),
                   ),
                 ),
@@ -53,6 +51,36 @@ class CategoryScreen extends StatelessWidget {
                   ),
                 ),
               ),//Kontostandanzeige
+              Center(child: FutureBuilder<List<Eintrag>>(
+                future: DBProvider.db.getAllEintraegeCategory(cat.category),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Eintrag>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Eintrag item = snapshot.data[index];
+                        return Dismissible(
+                          key: UniqueKey(),
+                          background: Container(color: Colors.red),
+                          onDismissed: (direction) {
+                            DBProvider.db.deleteClient(item.id);
+                          },
+                          child: ListTile(
+                            title: Text(item.category),
+                            leading: Text(item.amount.toStringAsFixed(2)),
+                            trailing: Text(item.date),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),)
             ],
           ),
         ),

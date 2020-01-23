@@ -1,3 +1,4 @@
+import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
@@ -11,9 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _addKonto;
-  TextEditingController _removeKonto;
-  TextEditingController _initKonto;
+  TextEditingController _addKonto; //Eingabe Betrag
+  TextEditingController _inputUsage;
+  TextEditingController _initKonto; //Kontoinitialisierung
 
   List<String> dropDownCategories = [
     "Wähle eine Kategorie", //TODO ändern
@@ -29,26 +30,25 @@ class _HomeScreenState extends State<HomeScreen> {
     "Geschenke",
   ];
 
-  dynamic tempCategorie = "Wähle eine Kategorie";
-
+  dynamic tempCategory = "Wähle eine Kategorie";
   bool needInit = false; //Initialisierung notwendig?
 
   @override
   void initState() {
     _addKonto = new TextEditingController();
-    _removeKonto = new TextEditingController();
+    _inputUsage = new TextEditingController();
     _initKonto = new TextEditingController();
-    if (needInit)
+    if (needInit) {//DBProvider.db.isEmty()
       WidgetsBinding.instance.addPostFrameCallback(
           (_) => _displayInitDialog(context)); //TODO evtl.als mounted property?
-
+    }
     super.initState();
   }
 
   @override
   void dispose() {
     _addKonto?.dispose();
-    _removeKonto?.dispose();
+    _inputUsage?.dispose();
     _initKonto?.dispose();
     super.dispose();
   }
@@ -77,16 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        DataModel.konto.getKontostand().toStringAsFixed(2) +
-                            " €",
-                        style: TextStyle(fontSize: 40),
-                      ),
+                      child: DataModel().getKontostand(context),
                     ),
                   ),
                 ),
               ), //Kontostandanzeige
-              //ToDo Textfield mit Verwendungszweck
               Padding(
                 //Betrag Eingabe
                 padding: const EdgeInsets.only(
@@ -104,17 +99,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ), //Betrag Eingabe
               Padding(
+                //Eingabe Verwendungszweck
+                padding: const EdgeInsets.only(
+                    top: 10.0, bottom: 10, left: 40, right: 40),
+                child: Center(
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    controller: _inputUsage,
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      labelText: "Verwendungszweck",
+                      hintText: "Wocheneinkauf", //ToDo
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
                 //Dropdown
                 padding: const EdgeInsets.only(
                     top: 10.0, bottom: 10, left: 40, right: 40),
                 child: Center(
                   child: DropdownButton<String>(
                     hint: Text("Wähle eine Kategorie"),
-                    value: tempCategorie,
+                    value: tempCategory,
                     onChanged: (String newValue) {
-                      tempCategorie = newValue; //test
+                      tempCategory = newValue; //test
                       setState(() {
-                        tempCategorie = newValue;
+                        tempCategory = newValue;
                       });
                     },
                     items: dropDownCategories
@@ -146,15 +157,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: <Widget>[
                     Spacer(),
                     RawMaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          DataModel.konto.addEintrag(new Eintrag(
+                      onPressed: () async {
+                        Eintrag tempEintrag = new Eintrag(
+                            false,
+                            num.parse(_addKonto.text),
+                            tempCategory,
+                            _inputUsage.text,
+                            "06.05.2018");
+                        await DBProvider.db.newEintrag(tempEintrag);
+
+                        /*DataModel.konto.addEintrag(new Eintrag(
+                            ++counter,
                               false,
                               num.parse(_addKonto.text),
-                              tempCategorie,
-                              new DateTime.now()));
-                          tempCategorie = "Wähle eine Kategorie";
+                              tempCategory,
+                              _inputUsage.text,
+                              new DateTime.now()));*/
+
+                        setState(() {
+                          tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();
+                          _inputUsage.clear();
                         });
                         //Navigator.pop(context);
                       },
@@ -170,14 +193,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Spacer(),
                     RawMaterialButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        Eintrag tempEintrag = new Eintrag(
+                            true,
+                            num.parse(_addKonto.text) * -1,
+                            tempCategory,
+                            _inputUsage.text,
+                            "06.05.2018");
+                        await DBProvider.db.newEintrag(tempEintrag);
                         setState(() {
-                          DataModel.konto.addEintrag(new Eintrag(
-                              true,
-                              num.parse(_addKonto.text),
-                              tempCategorie,
-                              new DateTime.now()));
+                          tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();
+                          _inputUsage.clear();
                         });
                         //Navigator.pop(context);
                       },
@@ -192,15 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(15.0),
                     ),
                     Spacer(),
-                    RawMaterialButton(
-                      onPressed: () {
-                        DataModel.konto.writeKontostand();
-                      },
-                      child: new Icon(Icons.print),
-                      shape: new CircleBorder(),
-                      elevation: 6.0,
-                      fillColor: Colors.blue,
-                    ),
                   ],
                 ),
               ),
@@ -213,134 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-/*  Widget button(icon, color1, color2, dialog, context) {
-    return RawMaterialButton(
-      onPressed: () => dialog(context),
-      child: new Icon(
-        icon,
-        color: color1,
-        size: 50.0,
-      ),
-      shape: new CircleBorder(),
-      elevation: 6.0,
-      fillColor: color2,
-      padding: const EdgeInsets.all(15.0),
-    );
-  }
-
- */
-/*
-  _displayAddDialog(BuildContext context) async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Einzahlung"),
-            content: Column(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _addKonto,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: "Betrag",
-                      hintText: "1234",
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: DropdownButton(
-                    //TODO DROPDOWN MENU
-                    hint: Text("Wähle eine Kategorie"),
-                    value: tempCategorie,
-                    onChanged: (newValue) {
-                      setState(() {
-                        tempCategorie = newValue;
-                      });
-                    },
-                    items: dropDownCategories
-                        .map((location) => DropdownMenuItem<String>(
-                            child: new Text(location), value: location))
-                        .toList(),
-                  ),
-                )
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("Abbrechen"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              FlatButton(
-                child: Text("Einzahlen"),
-                onPressed: () {
-                  setState(() {
-                    DataModel.konto.addEintrag(new Eintrag(
-                        false,
-                        num.parse(_addKonto.text),
-                        "Essen",
-                        new DateTime.now()));
-                    _addKonto.clear();
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  } */
-/*
-  _displayRemoveDialog(BuildContext context) async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Auszahlung"),
-            content: Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _removeKonto,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: "Betrag",
-                      hintText: "1234",
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("Abbrechen"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              FlatButton(
-                child: Text("Ausgabe"),
-                onPressed: () {
-                  setState(() {
-                    DataModel.konto.addEintrag(new Eintrag(
-                        true,
-                        num.parse(_removeKonto.text),
-                        "Essen",
-                        new DateTime.now()));
-                    _removeKonto.clear();
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  } */
-
   _displayInitDialog(BuildContext context) async {
+    //TODO wieder implementieren mit DB Abfrage
     await showDialog(
         context: context,
         builder: (context) {
@@ -367,13 +259,15 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: <Widget>[
               FlatButton(
                 child: Text("Kontostand übernehmen"),
-                onPressed: () {
+                onPressed: () async {
+                  Eintrag tempEintrag = new Eintrag(
+                      true,
+                      num.parse(_initKonto.text),
+                      "Initialisierung",
+                      "Initialisierung",
+                      "06.05.2018");
+                  await DBProvider.db.newEintrag(tempEintrag);
                   setState(() {
-                    DataModel.konto.addEintrag(new Eintrag(
-                        false,
-                        num.parse(_initKonto.text),
-                        "Essen",
-                        new DateTime.now()));
                     _initKonto.clear();
                   });
                   Navigator.pop(context);
@@ -384,3 +278,20 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 }
+
+/*  Widget button(icon, color1, color2, dialog, context) {
+    return RawMaterialButton(
+      onPressed: () => dialog(context),
+      child: new Icon(
+        icon,
+        color: color1,
+        size: 50.0,
+      ),
+      shape: new CircleBorder(),
+      elevation: 6.0,
+      fillColor: color2,
+      padding: const EdgeInsets.all(15.0),
+    );
+  }
+
+ */

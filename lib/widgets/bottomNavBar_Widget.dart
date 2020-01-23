@@ -15,10 +15,10 @@ Widget bottomNavBarWidget(context) {
   return BottomNavigationBar(
     items: DataModel.items,
     type: BottomNavigationBarType.fixed,
-    currentIndex: DataModel.currentIndex,
+    currentIndex: DataModel().currentIndex,
     selectedItemColor: Colors.teal, //ToDo
     onTap: (int index) {
-      DataModel.currentIndex = index;
+      DataModel().currentIndex = index;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DataModel.pages[index]),

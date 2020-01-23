@@ -1,48 +1,59 @@
+import 'dart:convert';
+
+Eintrag clientFromJson(String str) {
+  final jsonData = json.decode(str);
+  return Eintrag.fromMap(jsonData);
+}
+
+String clientToJson(Eintrag data) {
+  final dyn = data.toMap();
+  return json.encode(dyn);
+}
+
 class Eintrag {
-  bool _minus;
-  num _betrag;
-  dynamic _category;
-  dynamic _datum;
+  int id;
+  bool minus;
+  num amount;
+  String category;
+  String usage;
+  String date;
 
-  /*Eintrag(bool minus, num betrag, dynamic cat){
-    this._minus = minus;
-    this._betrag = betrag;
-    this._category = cat;
-    this._datum = new DateTime.now();
-
-  }*/
-
-  Eintrag(this._minus, this._betrag, this._category, this._datum);
-
-  factory Eintrag.fromJson(Map<String, dynamic> json) {
-    return new Eintrag(
-      json['_minus'],
-      json['_betrag'],
-      json['_category'],
-      json['_datum'],
-    );
+  Eintrag(bool minus, num amount, String cat, String usage, String datum){
+    //this.id = id;
+    this.minus = minus;
+    this.amount = amount;
+    this.category = cat;
+    this.usage = usage;
+    this.date = datum;
   }
 
-  Map<String, dynamic> toJson() =>
-      {
-        'minus': _minus,
-        'betrag': _betrag,
-        'categorie': _category,
-        'date': _datum.toIso8601String(),
-      };
+  Eintrag.database({
+    this.id,
+    this.minus,
+    this.amount,
+    this.category,
+    this.usage,
+    this.date
+});
 
-  num getBetrag() {
-    if (_minus)
-      return _betrag * -1;
-    else
-      return _betrag;
-  }
 
-  dynamic getCat() {
-    return _category;
-  }
+  factory Eintrag.fromMap(Map<String, dynamic> json) => new Eintrag.database(
+    id: json["id"],
+    minus: json["minus"] == 1,
+    amount: json["amount"],
+    category: json["category"],
+    usage: json['usage'],
+    date: json["date"],
+  );
 
-  dynamic getDatum() {
-    return _datum;
+  Map<String, dynamic> toMap(){
+    return{
+      'id' : id,
+      'minus' : minus,
+      'amount' : amount,
+      'category' : category,
+      'usage' : usage,
+      'date' : date,
+    };
   }
 }

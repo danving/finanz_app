@@ -1,4 +1,6 @@
 import 'package:finanz_app/model/data_model.dart';
+import 'package:finanz_app/model/database.dart';
+import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
@@ -10,7 +12,6 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  List<Widget> list = createList();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
                   child: Container(
-                    //width: 350,
+                    //
+                    // width: 350,
                     height: 100,
                     decoration: BoxDecoration(
                       color: Colors.teal[50],
@@ -35,18 +37,15 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        //konto.toStringAsFixed(2),
-                        DataModel.konto.getKontostand().toStringAsFixed(2) + " €",
-                        style: TextStyle(fontSize: 40),
-                      ),
+                      child: DataModel().getKontostand(context),
                     ),
                   ),
                 ),
               ),
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 8.0, bottom: 10.0),
+                  padding: const EdgeInsets.only(
+                      left: 15.0, right: 15.0, top: 8.0, bottom: 10.0),
                   child: Row(
                     children: <Widget>[
                       Text("Betrag"),
@@ -59,12 +58,34 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 ),
               ),
               Center(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return list[index];
+                child: FutureBuilder<List<Eintrag>>(
+                  future: DBProvider.db.getAllEintraege(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Eintrag>> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Eintrag item = snapshot.data[index];
+                          return Dismissible(
+                            key: UniqueKey(),
+                            background: Container(color: Colors.red),
+                            onDismissed: (direction) {
+                              DBProvider.db.deleteClient(item.id);
+                            },
+                            child: ListTile(
+                              title: Text(item.category),
+                              leading: Text(item.amount.toStringAsFixed(2)),
+                              trailing: Text(item.date),
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
               ),
@@ -74,22 +95,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
       ),
       drawer: drawerWidget(context),
       bottomNavigationBar: bottomNavBarWidget(context),
-    );
-  }
-
-  static List createList() {
-    List<Widget> liste = new List<Widget>();
-    for (int i = DataModel.konto.getCountEintraege() - 1; i >= 0; i--) {
-      liste.add(createUebersichtEintrag(i));
-    }
-    return liste;
-  }
-
-  static Widget createUebersichtEintrag(int i) {
-    return Card(
-      child: ListTile(
-          title: Text(
-              DataModel.konto.eintraege[i].getBetrag().toStringAsFixed(2))),
     );
   }
 }
