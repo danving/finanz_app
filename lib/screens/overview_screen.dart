@@ -75,11 +75,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                             onDismissed: (direction) {
                               DBProvider.db.deleteClient(item.id);
                             },
-                            child: ListTile(
-                              title: Text(item.category),
-                              leading: Text(item.amount.toStringAsFixed(2)),
-                              trailing: Text(item.date),
-                            ),
+                           child: overviewCard(item.amount.toStringAsFixed(2), item.category, item.usage, item.date),
                           );
                         },
                       );
@@ -97,4 +93,46 @@ class _OverviewScreenState extends State<OverviewScreen> {
       bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
+
+  Widget overviewCard (amount, category, usage, date){
+    return Card(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(left:12.0, right: 12.0, top:5.0, bottom: 5.0),
+          child: Row(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(amount),
+                ],
+              ),
+              Spacer(),
+              Column(
+                children: <Widget>[
+                  Row(
+
+                    children: <Widget>[
+                      Text(category,)
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(usage,)
+                    ],
+                  ),
+                ],
+              ),
+              Spacer(),
+              Column(
+                children: <Widget>[
+                  Text(date),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }
