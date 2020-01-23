@@ -21,7 +21,7 @@ Widget drawerWidget(context) {
           ),
         ),
         drawerList(context, "Home", HomeScreen(), Icon(Icons.home)),
-        drawerList(context, "Übersicht", OverviewScreen(), Icon(Icons.view_list)), //ToDo
+        drawerList(context, "Übersicht", OverviewScreen(), Icon(Icons.view_list)),
         drawerList(context, "Kategorien", CategoriesScreen(), Icon(Icons.apps)),
       ],
     ),

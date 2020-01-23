@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: false,
                     decoration: InputDecoration(
                       labelText: "Betrag",
-                      hintText: "00.00", //ToDo
+                      hintText: "00.00",
                     ),
                   ),
                 ),

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../model/data_model.dart';
 
-class Cat{                //ToDo
+class Cat{
   final String category;
   Cat(this.category);
 }
@@ -24,7 +24,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: Container(
         child: ListView(
           children: <Widget>[
-            categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0]), //ToDo
+            categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0]),
             categoryList(DataModel().categories[1], "assets/svg/home.svg",DataModel().categories[1]),
             categoryList(DataModel().categories[2], "assets/svg/car.svg",DataModel().categories[2]),
             categoryList(DataModel().categories[3], "assets/svg/airport.svg",DataModel().categories[3]),
@@ -34,7 +34,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             categoryList(DataModel().categories[7], "assets/svg/party.svg",DataModel().categories[7]),
             categoryList(DataModel().categories[8], "assets/svg/media.svg",DataModel().categories[8]),
             categoryList(DataModel().categories[9], "assets/svg/present.svg",DataModel().categories[9]),
-            categoryList(DataModel().categories[10], "assets/svg/other.svg", DataModel().categories[10]), //ToDo other svg
+            categoryList(DataModel().categories[10], "assets/svg/other.svg", DataModel().categories[10]),
           ],
         ),
       ),
@@ -47,7 +47,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         onTap: () {
           Navigator.push(
             context,
-            new MaterialPageRoute(builder: (context) => new CategoryScreen(cat: new Cat(modelString))), // ToDO
+            new MaterialPageRoute(builder: (context) => new CategoryScreen(cat: new Cat(modelString))),
           );
         },
       child: Card(
