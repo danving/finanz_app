@@ -8,7 +8,7 @@ import 'database.dart';
 
 class DataModel{
 
-  int currentIndex = 0;
+  static int currentIndex = 0;
 
   static final items = <BottomNavigationBarItem> [
     BottomNavigationBarItem(
