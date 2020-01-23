@@ -1,5 +1,6 @@
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
+import 'package:finanz_app/widgets/overview_card.dart';
 import 'package:flutter/material.dart';
 import '../model/data_model.dart';
 import '../widgets/appBar_widget.dart';
@@ -68,11 +69,7 @@ class CategoryScreen extends StatelessWidget {
                           onDismissed: (direction) {
                             DBProvider.db.deleteClient(item.id);
                           },
-                          child: ListTile(
-                            title: Text(item.category),
-                            leading: Text(item.amount.toStringAsFixed(2)),
-                            trailing: Text(item.date),
-                          ),
+                          child: overviewCard(item.amount.toStringAsFixed(2), item.category, item.usage, item.date),
                         );
                       },
                     );

@@ -4,6 +4,7 @@ import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
+import 'package:finanz_app/widgets/overview_card.dart';
 import 'package:flutter/material.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -94,45 +95,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
     );
   }
 
-  Widget overviewCard (amount, category, usage, date){
-    return Card(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left:12.0, right: 12.0, top:5.0, bottom: 5.0),
-          child: Row(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(amount),
-                ],
-              ),
-              Spacer(),
-              Column(
-                children: <Widget>[
-                  Row(
 
-                    children: <Widget>[
-                      Text(category,)
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(usage,)
-                    ],
-                  ),
-                ],
-              ),
-              Spacer(),
-              Column(
-                children: <Widget>[
-                  Text(date),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
 }
