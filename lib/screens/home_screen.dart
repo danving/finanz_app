@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     hint: Text("Wähle eine Kategorie"),
                     value: tempCategory,
                     onChanged: (String newValue) {
-                      tempCategory = newValue; //test
+                      FocusScope.of(context).requestFocus(FocusNode());
                       setState(() {
                         tempCategory = newValue;
                       });
