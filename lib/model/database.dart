@@ -83,21 +83,13 @@ class DBProvider {
   }
 
   //GesamtKontostand berechnen
-  Future<num> getTotal() async {
+  Future<double> getTotal() async {
     final db = await database;
+    double temptotal = 0;
     var result = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag");
-    var temptotal = await result[0]['Total'];
+    temptotal = await result[0]['Total'];
     return temptotal;
   }
-  //Initialisierung notwendig?
-  Future<bool> isEmty() async {
-    final db = await database;
-    var res = await db.query("Eintrag");
-    if(res.isNotEmpty)return true;
-    return false;
-  }
-
-
 }
 
 

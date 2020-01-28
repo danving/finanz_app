@@ -14,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _addKonto; //Eingabe Betrag
   TextEditingController _inputUsage;
-  TextEditingController _initKonto; //Kontoinitialisierung
 
   List<String> dropDownCategories = [
     "Wähle eine Kategorie", //TODO ändern
@@ -31,17 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   dynamic tempCategory = "Wähle eine Kategorie";
-  bool needInit = false; //Initialisierung notwendig?
-
   @override
   void initState() {
     _addKonto = new TextEditingController();
     _inputUsage = new TextEditingController();
-    _initKonto = new TextEditingController();
-    if (needInit) {//DBProvider.db.isEmty()
-      WidgetsBinding.instance.addPostFrameCallback(
-          (_) => _displayInitDialog(context)); //TODO evtl.als mounted property?
-    }
     super.initState();
   }
 
@@ -49,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _addKonto?.dispose();
     _inputUsage?.dispose();
-    _initKonto?.dispose();
     super.dispose();
   }
 
@@ -135,21 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Dropdown
-
-              /*Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Row(
-                  children: <Widget>[
-                    Spacer(),
-                    button(Icons.add, Colors.white, Colors.green[600],
-                        _displayAddDialog, context),
-                    Spacer(),
-                    button(Icons.remove, Colors.white, Colors.red,
-                        _displayRemoveDialog, context),
-                    Spacer(),
-                  ],
-                ),
-              ),*/ //NOT USED
               Padding(
                 padding: const EdgeInsets.only(
                     top: 30.0, bottom: 10, left: 40, right: 40),
@@ -165,15 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             _inputUsage.text,
                             "06.05.2018");
                         await DBProvider.db.newEintrag(tempEintrag);
-
-                        /*DataModel.konto.addEintrag(new Eintrag(
-                            ++counter,
-                              false,
-                              num.parse(_addKonto.text),
-                              tempCategory,
-                              _inputUsage.text,
-                              new DateTime.now()));*/
-
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();
@@ -231,52 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _displayInitDialog(BuildContext context) async {
-    //TODO wieder implementieren mit DB Abfrage
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Willkommen..."),
-            content: Column(
-              children: <Widget>[
-                Expanded(
-                    child: Text(
-                        "Danke fürs Runterladen unserer App. Hoffentlich reichts...")),
-                Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _initKonto,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: "Initial-Kontostand",
-                      hintText: "1000",
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("Kontostand übernehmen"),
-                onPressed: () async {
-                  Eintrag tempEintrag = new Eintrag(
-                      true,
-                      num.parse(_initKonto.text),
-                      "Initialisierung",
-                      "Initialisierung",
-                      "06.05.2018");
-                  await DBProvider.db.newEintrag(tempEintrag);
-                  setState(() {
-                    _initKonto.clear();
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
 }
 
 /*  Widget button(icon, color1, color2, dialog, context) {

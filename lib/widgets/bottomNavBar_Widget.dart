@@ -5,8 +5,7 @@ import 'package:finanz_app/screens/overview_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-final pages = <Widget> [
+final pages = <Widget>[
   HomeScreen(),
   OverviewScreen(),
 ];
@@ -16,7 +15,8 @@ Widget bottomNavBarWidget(context) {
     items: DataModel.items,
     type: BottomNavigationBarType.fixed,
     currentIndex: DataModel.currentIndex,
-    selectedItemColor: Colors.teal, //ToDo
+    selectedItemColor: Colors.teal,
+    //ToDo
     onTap: (int index) {
       DataModel.currentIndex = index;
       Navigator.push(
@@ -26,4 +26,3 @@ Widget bottomNavBarWidget(context) {
     },
   );
 }
-
