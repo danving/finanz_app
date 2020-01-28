@@ -2,7 +2,7 @@ import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
-import 'package:finanz_app/widgets/drawer_widget.dart';
+//import 'package:finanz_app/widgets/drawer_widget.dart'; //durch BottomNavbar ersetzt
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: false,
                     decoration: InputDecoration(
                       labelText: "Betrag",
-                      hintText: "100.00", //ToDo
+                      hintText: "100.00",
                     ),
                   ),
                 ),
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: false,
                     decoration: InputDecoration(
                       labelText: "Verwendungszweck",
-                      hintText: "Wocheneinkauf", //ToDo
+                      hintText: "Wocheneinkauf",
                     ),
                   ),
                 ),
