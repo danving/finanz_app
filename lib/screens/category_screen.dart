@@ -60,6 +60,7 @@ class CategoryScreen extends StatelessWidget {
                     return ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
+                      reverse: true,
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index) {
                         Eintrag item = snapshot.data[index];

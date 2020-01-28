@@ -49,9 +49,9 @@ class DataModel{
   ];
 
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
-    return FutureBuilder<num>(
+    return FutureBuilder<double>(
       future: DBProvider.db.getTotal(), // a previously-obtained Future<String> or null
-      builder: (BuildContext context, AsyncSnapshot<num> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
         List<Widget> children;
 
         if (snapshot.hasData) {

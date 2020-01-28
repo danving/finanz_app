@@ -39,6 +39,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     ),
                     child: Center(
                       child: DataModel().getKontostand(context),
+
                     ),
                   ),
                 ),
@@ -67,6 +68,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       return ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
+                        reverse: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           Eintrag item = snapshot.data[index];
@@ -75,6 +77,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                             background: Container(color: Colors.red),
                             onDismissed: (direction) {
                               DBProvider.db.deleteClient(item.id);
+                              setState(() {});
                             },
                            child: overviewCard(item.amount.toStringAsFixed(2), item.category, item.usage, item.date),
                           );
