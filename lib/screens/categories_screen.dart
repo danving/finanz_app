@@ -1,5 +1,6 @@
 import 'package:finanz_app/screens/category_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
+import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,7 +39,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ],
         ),
       ),
-      drawer: drawerWidget(context),
+      bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
 

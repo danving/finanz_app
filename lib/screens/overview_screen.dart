@@ -90,7 +90,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
           ),
         ),
       ),
-      drawer: drawerWidget(context),
       bottomNavigationBar: bottomNavBarWidget(context),
     );
   }

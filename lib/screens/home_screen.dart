@@ -1,10 +1,15 @@
+
+
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _addKonto; //Eingabe Betrag
   TextEditingController _inputUsage;
   TextEditingController _initKonto; //Kontoinitialisierung
+
 
   List<String> dropDownCategories = [
     "Wähle eine Kategorie", //TODO ändern
@@ -38,12 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
     _addKonto = new TextEditingController();
     _inputUsage = new TextEditingController();
     _initKonto = new TextEditingController();
-    if (needInit) {//DBProvider.db.isEmty()
+    if (needInit) {
+      //DBProvider.db.isEmty()
       WidgetsBinding.instance.addPostFrameCallback(
           (_) => _displayInitDialog(context)); //TODO evtl.als mounted property?
     }
     super.initState();
+
   }
+
+
+
 
   @override
   void dispose() {
@@ -56,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Home"),
+      appBar: appBarWidget("Hoffentlich reichts"),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -150,6 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),*/ //NOT USED
+
               Padding(
                 padding: const EdgeInsets.only(
                     top: 30.0, bottom: 10, left: 40, right: 40),
@@ -222,11 +234,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: RawMaterialButton(
+                        child: new Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        shape: CircleBorder(),
+                        elevation: 6.0,
+                        padding: const EdgeInsets.all(10.0),
+                        fillColor: Colors.teal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
-      drawer: drawerWidget(context),
       bottomNavigationBar: bottomNavBarWidget(context),
     );
   }

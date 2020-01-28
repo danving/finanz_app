@@ -20,6 +20,11 @@ class DataModel{
       icon: Icon(Icons.view_list),
       title: Text("Übersicht"),
     ),
+
+    BottomNavigationBarItem(
+      icon: Icon(Icons.category),
+      title: Text("Kategorien"),
+    ),
   ];
 
 
@@ -39,7 +44,8 @@ class DataModel{
 
   static final pages = <Widget> [
     HomeScreen(),
-    OverviewScreen()
+    OverviewScreen(),
+    CategoriesScreen(),
   ];
 
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
