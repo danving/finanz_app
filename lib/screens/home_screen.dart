@@ -5,6 +5,7 @@ import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -84,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     autofocus: false,
                     decoration: InputDecoration(
                       labelText: "Betrag",
-                      hintText: "00.00", //ToDo
+                      hintText: "100.00", //ToDo
                     ),
                   ),
                 ),
@@ -139,14 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             num.parse(_addKonto.text),
                             tempCategory,
                             _inputUsage.text,
-                            "06.05.2018");
+                            DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
                         await DBProvider.db.newEintrag(tempEintrag);
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();
                           _inputUsage.clear();
                         });
-                        //Navigator.pop(context);
                       },
                       child: new Icon(
                         Icons.add,
@@ -166,14 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             num.parse(_addKonto.text) * -1,
                             tempCategory,
                             _inputUsage.text,
-                            "06.05.2018");
+                            DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
                         await DBProvider.db.newEintrag(tempEintrag);
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();
                           _inputUsage.clear();
                         });
-                        //Navigator.pop(context);
                       },
                       child: new Icon(
                         Icons.remove,
@@ -199,20 +198,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 }
-
-/*  Widget button(icon, color1, color2, dialog, context) {
-    return RawMaterialButton(
-      onPressed: () => dialog(context),
-      child: new Icon(
-        icon,
-        color: color1,
-        size: 50.0,
-      ),
-      shape: new CircleBorder(),
-      elevation: 6.0,
-      fillColor: color2,
-      padding: const EdgeInsets.all(15.0),
-    );
-  }
-
- */

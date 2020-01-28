@@ -38,6 +38,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     ),
                     child: Center(
                       child: DataModel().getKontostand(context),
+
                     ),
                   ),
                 ),
@@ -75,6 +76,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                             background: Container(color: Colors.red),
                             onDismissed: (direction) {
                               DBProvider.db.deleteClient(item.id);
+                              setState(() {});
                             },
                             child: ListTile(
                               title: Text(item.category),

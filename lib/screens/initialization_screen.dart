@@ -2,6 +2,7 @@ import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class InitializationScreen extends StatefulWidget {
   @override
@@ -47,7 +48,9 @@ class _InitializationScreenState extends State<InitializationScreen> {
           child: Text("Kontostand übernehmen"),
           onPressed: () async {
             Eintrag tempEintrag = new Eintrag(true, num.parse(_initKonto.text),
-                "Initialisierung", "Initialisierung", "06.05.2018");
+                "Initialisierung",
+                "Initialisierung",
+                DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
             await DBProvider.db.newEintrag(tempEintrag);
             setState(() {
               _initKonto.clear();
