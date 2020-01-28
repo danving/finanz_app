@@ -66,6 +66,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       return ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
+                        reverse: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           Eintrag item = snapshot.data[index];
