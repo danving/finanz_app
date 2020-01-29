@@ -47,7 +47,9 @@ class _InitializationScreenState extends State<InitializationScreen> {
         FlatButton(
           child: Text("Kontostand übernehmen"),
           onPressed: () async {
-            Eintrag tempEintrag = new Eintrag(true, num.parse(_initKonto.text),
+            Eintrag tempEintrag = new Eintrag(
+                true,
+                num.parse(_initKonto.text),
                 "Initialisierung",
                 "Initialisierung",
                 DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
