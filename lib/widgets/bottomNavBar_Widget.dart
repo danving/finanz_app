@@ -12,6 +12,7 @@ Widget bottomNavBarWidget(context) {
     currentIndex: DataModel.currentIndex,
     selectedItemColor: Colors.teal, //ToDo selected Item anpassen
     onTap: (int index) {
+
       DataModel.currentIndex = index;
       Navigator.push(
         context,
