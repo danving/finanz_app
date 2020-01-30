@@ -7,7 +7,7 @@ import '../screens/categories_screen.dart';
 import 'database.dart';
 
 class DataModel{
-
+//Für die NavBar
   static int currentIndex = 0;//für BottomNavBar
 
   static final items = <BottomNavigationBarItem> [
@@ -27,6 +27,12 @@ class DataModel{
     ),
   ];
 
+  static final pages = <Widget> [
+    HomeScreen(),
+    OverviewScreen(),
+    CategoriesScreen(),
+  ];
+//Ende für die NavBar
 
   List<String> categories = [
     "Arbeit",
@@ -42,11 +48,7 @@ class DataModel{
     "Sonstiges",
   ];
 
-  static final pages = <Widget> [
-    HomeScreen(),
-    OverviewScreen(),
-    CategoriesScreen(),
-  ];
+
 
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
     return FutureBuilder<double>(

@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'eintrag.dart';
 
 class DBProvider {
   DBProvider._();
-
   static final DBProvider db = DBProvider._();
-
   Database _database;
 
   Future<Database> get database async {
@@ -26,15 +22,15 @@ class DBProvider {
     String path = join(documentsDirectory.path, "TestDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          await db.execute("CREATE TABLE Eintrag ("
-              "id INTEGER PRIMARY KEY,"
-              "minus BIT,"
-              "amount Double,"
-              "category TEXT,"
-              "usage TEXT,"
-              "date TEXT"
-              ")");
-        });
+      await db.execute("CREATE TABLE Eintrag ("
+          "id INTEGER PRIMARY KEY,"
+          "minus BIT,"
+          "amount Double,"
+          "category TEXT,"
+          "usage TEXT,"
+          "date TEXT"
+          ")");
+    });
   }
 
   newEintrag(Eintrag newEintrag) async {
@@ -45,8 +41,15 @@ class DBProvider {
     //insert to the table using the new id
     var raw = await db.rawInsert(
         "INSERT Into Eintrag (id,minus,amount,category,usage,date)"
-            " VALUES (?,?,?,?,?,?)",
-        [id, newEintrag.minus, newEintrag.amount, newEintrag.category, newEintrag.usage, newEintrag.date]);
+        " VALUES (?,?,?,?,?,?)",
+        [
+          id,
+          newEintrag.minus,
+          newEintrag.amount,
+          newEintrag.category,
+          newEintrag.usage,
+          newEintrag.date
+        ]);
     return raw;
   }
 
@@ -60,15 +63,16 @@ class DBProvider {
     final db = await database;
     var res = await db.query("Eintrag");
     List<Eintrag> list =
-    res.isNotEmpty ? res.map((c) => Eintrag.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Eintrag.fromMap(c)).toList() : [];
     return list;
   }
 
-  Future<List<Eintrag>> getAllEintraegeCategory(String category) async{
+  Future<List<Eintrag>> getAllEintraegeCategory(String category) async {
     final db = await database;
-    var res = await db.query("Eintrag", where: "category = ?", whereArgs: [category]);
+    var res =
+        await db.query("Eintrag", where: "category = ?", whereArgs: [category]);
     List<Eintrag> list =
-    res.isNotEmpty ? res.map((c) => Eintrag.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Eintrag.fromMap(c)).toList() : [];
     return list;
   }
 
@@ -91,7 +95,6 @@ class DBProvider {
     return temptotal;
   }
 }
-
 
 /* blockOrUnblock(Eintrag client) async {
     final db = await database;
