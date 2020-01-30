@@ -1,8 +1,9 @@
-import 'package:camera/camera.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
+import 'package:finanz_app/screens/camera_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
+
 //import 'package:finanz_app/widgets/drawer_widget.dart'; //durch BottomNavbar ersetzt
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   dynamic tempCategory = "Wähle eine Kategorie";
+
   @override
   void initState() {
     _addKonto = new TextEditingController();
@@ -144,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             num.parse(_addKonto.text),
                             tempCategory,
                             _inputUsage.text,
-                            DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
+                            DateFormat('dd.MM.yyyy kk:mm')
+                                .format(DateTime.now()));
                         await DBProvider.db.newEintrag(tempEintrag);
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
@@ -170,7 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             num.parse(_addKonto.text) * -1,
                             tempCategory,
                             _inputUsage.text,
-                            DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
+                            DateFormat('dd.MM.yyyy kk:mm')
+                                .format(DateTime.now()));
                         await DBProvider.db.newEintrag(tempEintrag);
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
@@ -208,6 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         elevation: 6.0,
                         padding: const EdgeInsets.all(10.0),
                         fillColor: Colors.teal,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CamSaveImg(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -220,5 +232,4 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
-
 }
