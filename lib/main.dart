@@ -6,7 +6,7 @@ import 'model/data_model.dart';
 import 'model/database.dart';
 import 'model/eintrag.dart';
 
-void main()  {
+void main() {
   DataModel dm = new DataModel();
   runApp(MyApp());
 }
