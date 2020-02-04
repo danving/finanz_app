@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:finanz_app/widgets/appBar_widget.dart';
+import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -33,7 +34,9 @@ class _CameraScreenState extends State<CameraScreen> {
         onPressed: getImage,
         tooltip: 'Pick Image',
         child: Icon(Icons.add_a_photo),
+        backgroundColor: Colors.teal[300],
       ),
+      bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
 }

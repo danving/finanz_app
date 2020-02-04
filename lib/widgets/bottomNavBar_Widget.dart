@@ -19,10 +19,14 @@ Widget bottomNavBarWidget(context) {
         icon: Icon(Icons.category),
         title: Text("Kategorien"),
       ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.camera_alt),
+        title: Text("Kamera"),
+      ),
     ],
     type: BottomNavigationBarType.fixed,
     currentIndex: DataModel.currentIndex,
-    selectedItemColor: Colors.green, //ToDo selected Item anpassen
+    selectedItemColor: Colors.teal[300], //ToDo selected Item anpassen
     onTap: (index) {
       DataModel.currentIndex = index;
       Navigator.pushAndRemoveUntil(

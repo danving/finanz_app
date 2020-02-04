@@ -50,178 +50,173 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget("Hoffentlich reichts", false),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                //Kontostandanzeige
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, bottom: 10, left: 40, right: 40),
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.teal[50],
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1.5,
-                      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Spacer(flex:1),
+            Center(
+              //Kontostandanzeige
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top:0, bottom:0, left: 40, right: 40),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.teal[50],
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1.5,
                     ),
-                    child: Center(
-                      child: DataModel().getKontostand(context),
-                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: DataModel().getKontostand(context),
                   ),
                 ),
-              ), //Kontostandanzeige
-              Padding(
-                //Betrag Eingabe
-                padding: const EdgeInsets.only(
-                    top: 10.0, bottom: 10, left: 40, right: 40),
-                child: Center(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _addKonto,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                      labelText: "Betrag",
-                      hintText: "100.00",
+              ),
+            ), //Kontostandanzeige
+            Spacer(flex: 1),
+            Padding(
+              //Betrag Eingabe
+              padding: const EdgeInsets.only(
+                  top:0, bottom: 0, left: 40, right: 40),
+              child: Center(
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: _addKonto,
+                  autofocus: false,
+                  cursorColor: Colors.teal[900],
+                  decoration: InputDecoration(
+                    labelText: "Betrag",
+                    hintText: "100.00",
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:Colors.grey),
                     ),
-                  ),
-                ),
-              ), //Betrag Eingabe
-              Padding(
-                //Eingabe Verwendungszweck
-                padding: const EdgeInsets.only(
-                    top: 10.0, bottom: 10, left: 40, right: 40),
-                child: Center(
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    controller: _inputUsage,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                      labelText: "Verwendungszweck",
-                      hintText: "Wocheneinkauf",
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:  Colors.teal[900],),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                //Dropdown
-                padding: const EdgeInsets.only(
-                    top: 10.0, bottom: 10, left: 40, right: 40),
-                child: Center(
-                  child: DropdownButton<String>(
-                    hint: Text("Wähle eine Kategorie"),
-                    value: tempCategory,
-                    onChanged: (String newValue) {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      setState(() {
-                        tempCategory = newValue;
-                      });
-                    },
-                    items: dropDownCategories
-                        .map((String value) => DropdownMenuItem<String>(
-                            child: new Text(value), value: value))
-                        .toList(),
+            ), //Betrag Eingabe
+            Spacer(flex:1),
+            Padding(
+              //Eingabe Verwendungszweck
+              padding: const EdgeInsets.only(
+                  top: 0, bottom: 0, left: 40, right: 40),
+              child: Center(
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  controller: _inputUsage,
+                  autofocus: false,
+                  cursorColor:  Colors.teal[900],
+                  decoration: InputDecoration(
+                    labelText: "Verwendungszweck",
+                    hintText: "Wocheneinkauf",
+                    labelStyle: TextStyle(color: Colors.black),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:Colors.grey),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:  Colors.teal[900]),
+                    ),
                   ),
                 ),
-              ), //Dropdown
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 30.0, bottom: 10, left: 40, right: 40),
-                child: Row(
-                  children: <Widget>[
-                    Spacer(),
-                    RawMaterialButton(
-                      onPressed: () async {
-                        Eintrag tempEintrag = new Eintrag(
-                            false,
-                            num.parse(_addKonto.text),
-                            tempCategory,
-                            _inputUsage.text,
-                            DateFormat('dd.MM.yyyy kk:mm')
-                                .format(DateTime.now()));
-                        await DBProvider.db.newEintrag(tempEintrag);
-                        setState(() {
-                          tempCategory = "Wähle eine Kategorie";
-                          _addKonto.clear();
-                          _inputUsage.clear();
-                        });
-                      },
-                      child: new Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 50.0,
-                      ),
-                      shape: new CircleBorder(),
-                      elevation: 6.0,
-                      fillColor: Colors.green[600],
-                      padding: const EdgeInsets.all(15.0),
-                    ),
-                    Spacer(),
-                    RawMaterialButton(
-                      onPressed: () async {
-                        Eintrag tempEintrag = new Eintrag(
-                            true,
-                            num.parse(_addKonto.text) * -1,
-                            tempCategory,
-                            _inputUsage.text,
-                            DateFormat('dd.MM.yyyy kk:mm')
-                                .format(DateTime.now()));
-                        await DBProvider.db.newEintrag(tempEintrag);
-                        setState(() {
-                          tempCategory = "Wähle eine Kategorie";
-                          _addKonto.clear();
-                          _inputUsage.clear();
-                        });
-                      },
-                      child: new Icon(
-                        Icons.remove,
-                        color: Colors.white,
-                        size: 50.0,
-                      ),
-                      shape: new CircleBorder(),
-                      elevation: 6.0,
-                      fillColor: Colors.red,
-                      padding: const EdgeInsets.all(15.0),
-                    ),
-                    Spacer(),
-                  ],
+              ),
+            ),
+            Spacer(flex:1),
+            Padding(
+              //Dropdown
+              padding: const EdgeInsets.only(
+                  top: 0, bottom: 0, left: 40, right: 40),
+              child: Center(
+                child: DropdownButton<String>(
+                  hint: Text("Wähle eine Kategorie",
+                  style: TextStyle(color: Color.fromRGBO(7, 95, 30, 1)),
+                  ),
+                  value: tempCategory,
+                  onChanged: (String newValue) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    setState(() {
+                      tempCategory = newValue;
+                    });
+                  },
+                  items: dropDownCategories
+                      .map((String value) => DropdownMenuItem<String>(
+                          child: new Text(value), value: value))
+                      .toList(),
                 ),
               ),
-              Row(
+            ), //Dropdown
+            Spacer(flex:1),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 0, bottom: 0, left: 40, right: 40),
+              child: Row(
                 children: <Widget>[
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all (8.0),
-                    child: Row(
-                      children: <Widget>[
-                        RawMaterialButton(
-                          child: new Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                          shape: CircleBorder(),
-                          elevation: 6.0,
-                          padding: const EdgeInsets.all(10.0),
-                          fillColor: Colors.teal,
-                          onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CameraScreen()),
-                            );
-                          },
-                        ),
-                      ],
+                  RawMaterialButton(
+                    onPressed: () async {
+                      Eintrag tempEintrag = new Eintrag(
+                          false,
+                          num.parse(_addKonto.text),
+                          tempCategory,
+                          _inputUsage.text,
+                          DateFormat('dd.MM.yyyy kk:mm')
+                              .format(DateTime.now()));
+                      await DBProvider.db.newEintrag(tempEintrag);
+                      setState(() {
+                        tempCategory = "Wähle eine Kategorie";
+                        _addKonto.clear();
+                        _inputUsage.clear();
+                      });
+                    },
+                    child: new Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 50.0,
                     ),
+                    shape: new CircleBorder(),
+                    elevation: 6.0,
+                    fillColor: Colors.greenAccent[700],
+                    padding: const EdgeInsets.all(15.0),
                   ),
+                  Spacer(),
+                  RawMaterialButton(
+                    onPressed: () async {
+                      Eintrag tempEintrag = new Eintrag(
+                          true,
+                          num.parse(_addKonto.text) * -1,
+                          tempCategory,
+                          _inputUsage.text,
+                          DateFormat('dd.MM.yyyy kk:mm')
+                              .format(DateTime.now()));
+                      await DBProvider.db.newEintrag(tempEintrag);
+                      setState(() {
+                        tempCategory = "Wähle eine Kategorie";
+                        _addKonto.clear();
+                        _inputUsage.clear();
+                      });
+                    },
+                    child: new Icon(
+                      Icons.remove,
+                      color: Colors.white,
+                      size: 50.0,
+                    ),
+                    shape: new CircleBorder(),
+                    elevation: 6.0,
+                    fillColor: Colors.red,
+                    padding: const EdgeInsets.all(15.0),
+                  ),
+                  Spacer(),
                 ],
               ),
-            ],
-          ),
+            ),
+            Spacer(flex:1)
+          ],
         ),
       ),
       bottomNavigationBar: bottomNavBarWidget(context),

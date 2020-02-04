@@ -1,3 +1,4 @@
+import 'package:finanz_app/screens/camera_screen.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/screens/overview_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class DataModel{
     HomeScreen(),
     OverviewScreen(),
     CategoriesScreen(),
+    CameraScreen(),
   ];
 //Ende für die NavBar
 
