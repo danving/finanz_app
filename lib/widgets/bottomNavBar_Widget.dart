@@ -25,9 +25,10 @@ Widget bottomNavBarWidget(context) {
     selectedItemColor: Colors.green, //ToDo selected Item anpassen
     onTap: (index) {
       DataModel.currentIndex = index;
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => DataModel.pages[index]),
+          (Route<dynamic> route) => false,
       );
     },
   );
