@@ -201,6 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         _inputUsage.clear();
                       });
                     },
+                    //TODO Aufruf brokeDialog(), wenn Konto ins Minus kommt
                     child: new Icon(
                       Icons.remove,
                       color: Colors.white,

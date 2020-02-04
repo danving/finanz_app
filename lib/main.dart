@@ -12,13 +12,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+
+// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-      ),
+      theme: ThemeData(),
       home: FutureBuilder<List<Eintrag>>(
           future: DBProvider.db.getAllEintraege(),
           builder:

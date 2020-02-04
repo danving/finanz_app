@@ -26,7 +26,7 @@ Widget bottomNavBarWidget(context) {
     ],
     type: BottomNavigationBarType.fixed,
     currentIndex: DataModel.currentIndex,
-    selectedItemColor: Colors.teal[300], //ToDo selected Item anpassen
+    selectedItemColor: Colors.teal[300],
     onTap: (index) {
       DataModel.currentIndex = index;
       Navigator.pushAndRemoveUntil(
