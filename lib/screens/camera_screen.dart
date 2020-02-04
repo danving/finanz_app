@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,12 +23,10 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Picker Example'),
-      ),
+      appBar: appBarWidget("Bon Kamera", true),
       body: Center(
         child: _image == null
-            ? Text('No image selected.')
+            ? Text('Noch keine Bons vorhanden.')
             : Image.file(_image),
       ),
       floatingActionButton: FloatingActionButton(

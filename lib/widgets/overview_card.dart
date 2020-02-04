@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget overviewCard (amount, category, usage, date){
+Widget overviewCard(amount, category, usage, date) {
   return Card(
     child: Center(
       child: Padding(
-        padding: const EdgeInsets.only(left:12.0, right: 12.0, top:5.0, bottom: 5.0),
+        padding: const EdgeInsets.only(
+            left: 12.0, right: 12.0, top: 5.0, bottom: 5.0),
         child: Row(
           children: <Widget>[
             Column(
@@ -17,12 +18,16 @@ Widget overviewCard (amount, category, usage, date){
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(category,)
+                    Text(
+                      category,
+                    )
                   ],
                 ),
                 Row(
                   children: <Widget>[
-                    Text(usage,)
+                    Text(
+                      usage,
+                    )
                   ],
                 ),
               ],
@@ -30,7 +35,14 @@ Widget overviewCard (amount, category, usage, date){
             Spacer(),
             Column(
               children: <Widget>[
-                Text(date),
+                Row(
+                  children: <Widget>[
+                    Text(date.substring(0, 10))],
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(date.substring(11, 16))],
+                )
               ],
             ),
           ],

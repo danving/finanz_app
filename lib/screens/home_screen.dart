@@ -2,12 +2,9 @@ import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
-//import 'package:finanz_app/widgets/drawer_widget.dart'; //durch BottomNavbar ersetzt
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
 import 'package:intl/intl.dart';
-
 import 'camera_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -52,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Hoffentlich reichts"),
+      appBar: appBarWidget("Hoffentlich reichts", false),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -194,32 +191,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: RawMaterialButton(
-                        child: new Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 25,
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all (8.0),
+                    child: Row(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          child: new Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                          shape: CircleBorder(),
+                          elevation: 6.0,
+                          padding: const EdgeInsets.all(10.0),
+                          fillColor: Colors.teal,
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => CameraScreen()),
+                            );
+                          },
                         ),
-                        shape: CircleBorder(),
-                        elevation: 6.0,
-                        padding: const EdgeInsets.all(10.0),
-                        fillColor: Colors.teal,
-                        onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CameraScreen()),
-                        );
-                        },
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

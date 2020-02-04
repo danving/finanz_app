@@ -10,23 +10,6 @@ class DataModel{
 //Für die NavBar
   static int currentIndex = 0;//für BottomNavBar
 
-  static final items = <BottomNavigationBarItem> [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      title: Text("Home"),
-    ),
-
-    BottomNavigationBarItem(
-      icon: Icon(Icons.view_list),
-      title: Text("Übersicht"),
-    ),
-
-    BottomNavigationBarItem(
-      icon: Icon(Icons.category),
-      title: Text("Kategorien"),
-    ),
-  ];
-
   static final pages = <Widget> [
     HomeScreen(),
     OverviewScreen(),
@@ -98,8 +81,5 @@ class DataModel{
       },
     );
   }
-
-
-
 }
 

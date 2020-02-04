@@ -3,7 +3,6 @@ import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
-import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:finanz_app/widgets/overview_card.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Übersicht"),
+      appBar: appBarWidget("Übersicht", false),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -77,7 +76,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                             background: Container(color: Colors.red),
                             onDismissed: (direction) {
                               DBProvider.db.deleteClient(item.id);
-                              setState(() {});
+                              setState(() {});// Reload Kontostand
                             },
                            child: overviewCard(item.amount.toStringAsFixed(2), item.category, item.usage, item.date),
                           );

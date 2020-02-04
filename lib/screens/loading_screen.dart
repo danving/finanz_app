@@ -8,9 +8,19 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CircularProgressIndicator(),
-
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Spacer(),
+          Center(
+            child: Image.asset('assets/images/logo_money.png'),
+          ),
+          CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
+          ),
+          Spacer(),
+        ],
+      ),
     );
   }
 }

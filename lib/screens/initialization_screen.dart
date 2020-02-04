@@ -1,6 +1,7 @@
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/screens/home_screen.dart';
+import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +28,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBarWidget("Willkommen", false),
         body: Container(
             child: Column(
       children: <Widget>[

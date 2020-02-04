@@ -13,7 +13,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(cat.category),
+      appBar: appBarWidget(cat.category, true),
       body: SingleChildScrollView(
         child: Container(
           child: Column(

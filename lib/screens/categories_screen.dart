@@ -1,10 +1,8 @@
 import 'package:finanz_app/screens/category_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
-import 'package:finanz_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../model/data_model.dart';
 
 class Cat{
@@ -21,7 +19,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Kategorien"),
+      appBar: appBarWidget("Kategorien", false),
       body: Container(
         child: ListView(
           children: <Widget>[
