@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:finanz_app/screens/imgFull_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
+import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -45,11 +46,13 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_a_photo),
-        backgroundColor: Colors.teal,
+        tooltip: 'Pick Image',
+        backgroundColor: Colors.teal[300],
         onPressed: () async {
           openCamera();
         },
       ),
+      bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
 
