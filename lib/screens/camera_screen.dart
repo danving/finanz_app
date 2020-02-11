@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -54,7 +53,6 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-
   Widget showGallery(AsyncSnapshot<List> snapshot) {
     return GridView.builder(
         itemCount: snapshot.data.length,
@@ -65,12 +63,19 @@ class _CameraScreenState extends State<CameraScreen> {
           return Padding(
               padding: EdgeInsets.all(2),
               child: GestureDetector(
-                onTap: () {Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ImgFullScreen(snapshot: snapshot )));},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ImgFullScreen(
+                                snapshot: snapshot,
+                                curIndex: index,
+                              )));
+                },
                 child: FadeInImage(
                   placeholder: AssetImage("assets/images/loading.gif"),
                   image: FileImage(
-                    snapshot.data[index],
+                    snapshot.data[snapshot.data.length - index - 1],
                   ),
                 ),
               ));
@@ -88,12 +93,13 @@ class _CameraScreenState extends State<CameraScreen> {
 
   void openCamera() async {
     // using your method of getting an image
-    final File image = await ImagePicker.pickImage(source: ImageSource.camera);
+    final File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, maxHeight: 800, maxWidth: 600);
     // getting a directory path for saving
     //dir = await createFolderInAppDocDir("images");
     // copy the file to a new path
     await image.copy('$dir/image_' +
-        DateFormat('ddMMyyyy_HHmmss').format(DateTime.now()) +
+        DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) +
         '.jpg');
   }
 

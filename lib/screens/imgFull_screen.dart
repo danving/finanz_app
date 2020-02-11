@@ -4,12 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-class ImgFullScreen extends StatelessWidget {
+class ImgFullScreen extends StatefulWidget {
   AsyncSnapshot<List> snapshot;
+  int curIndex;
+
+  ImgFullScreen({Key key, @required this.snapshot, @required this.curIndex})
+      : super(key: key);
+
+  @override
+  _ImgFullScreenState createState() => _ImgFullScreenState();
+}
+
+class _ImgFullScreenState extends State<ImgFullScreen> {
   int ind;
   File file;
+  PageController _controller = PageController();
 
-  ImgFullScreen({Key key, @required this.snapshot}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _controller.jumpToPage(widget.curIndex));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +34,17 @@ class ImgFullScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height - 135,
+            height: MediaQuery.of(context).size.height - 135,
             child: PhotoViewGallery.builder(
-              itemCount: snapshot.data.length,
+              pageController: _controller,
+              itemCount: widget.snapshot.data.length,
               builder: (context, index) {
-                ind = index;
-                file = snapshot.data[ind];
+                file = widget
+                    .snapshot.data[widget.snapshot.data.length - index - 1];
                 return PhotoViewGalleryPageOptions(
                   imageProvider: FileImage(
-                    snapshot.data[index],
+                    widget
+                        .snapshot.data[widget.snapshot.data.length - index - 1],
                   ),
                   // Contained = the smallest possible size to fit one dimension of the screen
                   minScale: PhotoViewComputedScale.contained * 0.8,
@@ -40,9 +55,7 @@ class ImgFullScreen extends StatelessWidget {
               scrollPhysics: BouncingScrollPhysics(),
               // Set the background color to the "classic white"
               backgroundDecoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .canvasColor,
+                color: Theme.of(context).canvasColor,
               ),
               loadingChild: Center(
                 child: CircularProgressIndicator(),
@@ -51,12 +64,9 @@ class ImgFullScreen extends StatelessWidget {
           ),
           Container(
             height: 55,
-            width: MediaQuery
-              .of(context)
-        .size
-        .width,
+            width: MediaQuery.of(context).size.width,
             child: FlatButton(
-              color: Colors.redAccent,
+                color: Colors.redAccent,
                 onPressed: () {
                   file.deleteSync(recursive: true);
                   Navigator.pop(context);
@@ -64,8 +74,7 @@ class ImgFullScreen extends StatelessWidget {
                 child: Text("Bon löschen!")),
           ),
         ],
-      )
-      ,
+      ),
     );
   }
 }
