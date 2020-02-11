@@ -94,6 +94,13 @@ class DBProvider {
     temptotal = await result[0]['Total'];
     return temptotal;
   }
+  Future<double> getCategorySum(String category) async{
+    final db = await database;
+    double tempcategory = 0;
+    var carResult = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE category = ?", [category]);
+    tempcategory = await carResult[0]['Total'];
+    return tempcategory;
+}
 }
 
 /* blockOrUnblock(Eintrag client) async {
