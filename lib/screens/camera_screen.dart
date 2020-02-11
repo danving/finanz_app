@@ -29,16 +29,14 @@ class _CameraScreenState extends State<CameraScreen> {
       body: Column(
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height - 80,
+            height: MediaQuery.of(context).size.height - 160,
             child: FutureBuilder<List>(
                 future: _listofFiles(),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   if (snapshot.hasData) {
                     return showGallery(snapshot);
-                    //return imagesGrid(context, snapshot);//returns the gallery
-                    //return Image.file(snapshot.data[0]);
                   } else {
-                    return Text("(snapshot has no data)");
+                    return Text("Keine Bilder vorhanden!");
                   }
                 }),
           ),
