@@ -69,14 +69,14 @@ class _OverviewScreenState extends State<OverviewScreen> {
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
-                                reverse: true, //todo index invertieren
+                                reverse: false,
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  Eintrag item = snapshot.data[index];
+                                  Eintrag item = snapshot.data[snapshot.data.length - index -1];
                                   return Dismissible(
                                     key: UniqueKey(),
                                     background: Container(color: Colors.red),
-                                    onDismissed: (direction) { //todo index invertieren
+                                    onDismissed: (direction) {
                                       DBProvider.db.deleteClient(item.id);
                                       setState(() {}); // Reload Kontostand
                                     },

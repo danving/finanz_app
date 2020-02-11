@@ -88,10 +88,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
-                                reverse: false, //todo
+                                //reverse: false,
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  Eintrag item = snapshot.data[index];
+                                  Eintrag item = snapshot.data[snapshot.data.length - index -1];
                                   return Dismissible(
                                     key: UniqueKey(),
                                     background: Container(color: Colors.red),

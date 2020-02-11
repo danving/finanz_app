@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "Freizeit",
     "Medien",
     "Geschenke",
+    "Sonstiges"
   ];
 
   dynamic tempCategory = "Wähle eine Kategorie";
