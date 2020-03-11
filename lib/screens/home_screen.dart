@@ -33,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   dynamic tempCategory = "Wähle eine Kategorie";
 
+
+
   @override
   void initState() {
     _addKonto = new TextEditingController();
@@ -40,11 +42,26 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+
+
   @override
   void dispose() {
     _addKonto?.dispose();
     _inputUsage?.dispose();
     super.dispose();
+  }
+
+  Future<bool> boolbroke() async{
+    var broke = await DBProvider.db.getTotal();
+    if(broke < 0) return true;
+  }
+
+  Future<bool> compare() async{
+    var compStudent = -819;
+    var compAusgabe = await DBProvider.db.getMinusTotal();
+    if(compAusgabe >= compStudent)
+      return true;
+
   }
 
   @override
@@ -186,6 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(15.0),
                   ),
                   Spacer(),
+                  //TODO Aufruf brokeDialog(), wenn Konto ins Minus kommt
                   RawMaterialButton(
                     onPressed: () async {
                       Eintrag tempEintrag = new Eintrag(
@@ -196,13 +214,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateFormat('dd.MM.yyyy kk:mm')
                               .format(DateTime.now()));
                       await DBProvider.db.newEintrag(tempEintrag);
+
+                      if(boolbroke() == true) {
+                        DataModel().showAlertDialog(context, "Tja, reicht wohl nicht", "Du hast dein Konto überzogen und bist nun im Minus");
+                      }
+                      if(compare() == true) {
+                        DataModel().showAlertDialog(context, "Durchschnittliche Ausgaben", "Du hast nun die monatlichen Durchschnittausgaben "
+                            "eines Studenten von 819€ erreicht.");
+                      }
                       setState(() {
                         tempCategory = "Wähle eine Kategorie";
                         _addKonto.clear();
                         _inputUsage.clear();
                       });
                     },
-                    //TODO Aufruf brokeDialog(), wenn Konto ins Minus kommt
                     child: new Icon(
                       Icons.remove,
                       color: Colors.white,

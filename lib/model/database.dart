@@ -97,10 +97,18 @@ class DBProvider {
   Future<double> getCategorySum(String category) async{
     final db = await database;
     double tempcategory = 0;
-    var carResult = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE category = ?", [category]);
-    tempcategory = await carResult[0]['Total'];
+    var catResult = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE category = ?", [category]);
+    tempcategory = await catResult[0]['Total'];
     return tempcategory;
 }
+
+  Future<double> getMinusTotal() async {
+    final db = await database;
+    double tempMinus = 0;
+    var minusRes = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE amount < 0");
+    tempMinus = await minusRes[0]['Total'];
+    return tempMinus;
+  }
 }
 
 /* blockOrUnblock(Eintrag client) async {
