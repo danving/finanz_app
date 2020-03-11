@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../model/data_model.dart';
 
+//Screen für Kategorienübersicht
 class Cat{
   final String category;
   Cat(this.category);
@@ -22,6 +23,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: appBarWidget("Kategorien", false),
       body: Scrollbar(
         child: Container(
+          //Liste aller Kategorien
           child: ListView(
             children: <Widget>[
               categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0],Colors.blueGrey[100]),
@@ -43,6 +45,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
+  //Weiterleitung zur Einzelansicht der Kategorien
   Widget categoryList(title, image, modelString, color) {
     return GestureDetector(
         onTap: () {

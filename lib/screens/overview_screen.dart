@@ -6,6 +6,8 @@ import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:finanz_app/widgets/overview_card.dart';
 import 'package:flutter/material.dart';
 
+
+//Übersicht der Einträge
 class OverviewScreen extends StatefulWidget {
   @override
   _OverviewScreenState createState() => _OverviewScreenState();
@@ -17,6 +19,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return Scaffold(
       appBar: appBarWidget("Übersicht", false),
       body: Container(
+        //Anzeige des Kontostandes
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -39,6 +42,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 ),
               ),
             ),
+            //Anzeige der bisherigen Einträge
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -73,6 +77,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   Eintrag item = snapshot.data[snapshot.data.length - index -1];
+                                  //Wegwischen/ Löschen von Einträgen
                                   return Dismissible(
                                     key: UniqueKey(),
                                     background: Container(color: Colors.red),

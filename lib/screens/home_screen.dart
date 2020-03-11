@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _addKonto; //Eingabe Betrag
-  TextEditingController _inputUsage;
+  TextEditingController _inputUsage; //Eingabe Verwendungszweck
 
   List<String> dropDownCategories = [
     "Wähle eine Kategorie", //TODO ändern
@@ -35,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _addKonto = new TextEditingController();
-    _inputUsage = new TextEditingController();
+    _addKonto = new TextEditingController(); //Controller für Ein-/ Ausgaben
+    _inputUsage = new TextEditingController(); //COntroller für Verwendungszeck
     super.initState();
   }
 
@@ -76,10 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-            ), //Kontostandanzeige
+            ),
             Spacer(flex: 1),
+            //Textfeld für Betrageingabe
             Padding(
-              //Betrag Eingabe
               padding: const EdgeInsets.only(
                   top:0, bottom: 0, left: 40, right: 40),
               child: Center(
@@ -102,10 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-            ), //Betrag Eingabe
+            ),
             Spacer(flex:1),
+            //Textfeld für Verwendungszeckeingabe
             Padding(
-              //Eingabe Verwendungszweck
               padding: const EdgeInsets.only(
                   top: 0, bottom: 0, left: 40, right: 40),
               child: Center(
@@ -129,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Spacer(flex:1),
+            //Dropdown für Kategorienauswahl
             Padding(
               //Dropdown
               padding: const EdgeInsets.only(
@@ -153,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ), //Dropdown
             Spacer(flex:1),
+            //Button für Einzahlung
             Padding(
               padding: const EdgeInsets.only(
                   top: 0, bottom: 0, left: 40, right: 40),
@@ -161,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Spacer(),
                   RawMaterialButton(
                     onPressed: () async {
+                      //Eintrag in Datenbank
                       Eintrag tempEintrag = new Eintrag(
                           false,
                           num.parse(_addKonto.text),
@@ -186,8 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(15.0),
                   ),
                   Spacer(),
+                  //Button für Auszahlung
                   RawMaterialButton(
                     onPressed: () async {
+                      //Eintrag in Datenbank
                       Eintrag tempEintrag = new Eintrag(
                           true,
                           num.parse(_addKonto.text) * -1,
