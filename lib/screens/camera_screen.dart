@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:finanz_app/model/data_model.dart';
 import 'package:finanz_app/screens/imgFull_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
@@ -23,33 +24,36 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarWidget("Bon-Kamera", true),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height - 160,
-            child: FutureBuilder<List>(
-                future: _listofFiles(),
-                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-                  if (snapshot.hasData) {
-                    return showGallery(snapshot);
-                  } else {
-                    return Text("Keine Bilder vorhanden!");
-                  }
-                }),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: DataModel().onWillPop,
+      child: Scaffold(
+        appBar: appBarWidget("Bon-Kamera", true),
+        body: Column(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height - 160,
+              child: FutureBuilder<List>(
+                  future: _listofFiles(),
+                  builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                    if (snapshot.hasData) {
+                      return showGallery(snapshot);
+                    } else {
+                      return Text("Keine Bilder vorhanden!");
+                    }
+                  }),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add_a_photo),
+          tooltip: 'Pick Image',
+          backgroundColor: Colors.teal[300],
+          onPressed: () async {
+            openCamera();
+          },
+        ),
+        bottomNavigationBar: bottomNavBarWidget(context),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add_a_photo),
-        tooltip: 'Pick Image',
-        backgroundColor: Colors.teal[300],
-        onPressed: () async {
-          openCamera();
-        },
-      ),
-      bottomNavigationBar: bottomNavBarWidget(context),
     );
   }
 

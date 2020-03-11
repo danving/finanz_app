@@ -3,6 +3,7 @@ import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/screens/overview_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../screens/categories_screen.dart';
 import 'database.dart';
@@ -33,6 +34,24 @@ class DataModel{
     "Sonstiges",
   ];
 
+  DateTime currentBackPressTime;
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(
+        msg: "Zum Beenden der App nochmal den Zurück-Button drücken.",
+        backgroundColor: Colors.blue,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+
+      );
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
 
 
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
@@ -83,6 +102,7 @@ class DataModel{
       },
     );
   }
+
   Widget getKontostandCategory(BuildContext context, String category) {//Textelement zur Kontostandsanzeige
     return FutureBuilder<double>(
       future: DBProvider.db.getCategorySum(category), // a previously-obtained Future<String> or null
@@ -110,14 +130,9 @@ class DataModel{
           ];
         } else {
           children = <Widget>[
-            SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            ),
             const Padding(
               padding: EdgeInsets.only(top: 16),
-              child: Text('Awaiting result...'),
+              child: Text('Keine Einträge in dieser Kategorie'),
             )
           ];
         }

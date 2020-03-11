@@ -26,6 +26,7 @@ dependencies:
   intl:
   image_picker:
   photo_view: ^0.9.1
+  fluttertoast:
 
 
   # The following adds the Cupertino Icons font to your application.

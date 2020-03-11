@@ -64,11 +64,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     left: 15.0, right: 15.0, top: 8.0, bottom: 10.0),
                 child: Row(
                   children: <Widget>[
-                    Text("Betrag"),
+                    Expanded(flex: 2, child: Text("Betrag", style: TextStyle(fontWeight: FontWeight.bold),)),
                     Spacer(),
-                    Text("Kategorie"),
+                    Expanded(flex: 5, child: Text("Kategorie", style: TextStyle(fontWeight: FontWeight.bold),)),
                     Spacer(),
-                    Text("Datum"),
+                    Expanded(flex: 3, child: Row(
+                      children: <Widget>[
+                        Spacer(),
+                        Text("Datum", style: TextStyle(fontWeight: FontWeight.bold),),
+                      ],
+                    )),
                   ],
                 ),
               ),
