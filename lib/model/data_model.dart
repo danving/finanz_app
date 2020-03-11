@@ -35,25 +35,7 @@ class DataModel{
 
 
 
-  Widget showAlertDialog(BuildContext context, title, content){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(content),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Uff.."),
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      }
-    );
-  }
+
 
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
     return FutureBuilder<double>(

@@ -1,3 +1,4 @@
+import 'package:finanz_app/model/alertDialog.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
@@ -51,18 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  Future<bool> boolbroke() async{
-    var broke = await DBProvider.db.getTotal();
-    if(broke < 0) return true;
-  }
-
-  Future<bool> compare() async{
-    var compStudent = -819;
-    var compAusgabe = await DBProvider.db.getMinusTotal();
-    if(compAusgabe >= compStudent)
-      return true;
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateFormat('dd.MM.yyyy kk:mm')
                               .format(DateTime.now()));
                       await DBProvider.db.newEintrag(tempEintrag);
+                     AlertDialogs().isNotBroke();
                       setState(() {
                         tempCategory = "Wähle eine Kategorie";
                         _addKonto.clear();
@@ -203,7 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(15.0),
                   ),
                   Spacer(),
-                  //TODO Aufruf brokeDialog(), wenn Konto ins Minus kommt
                   RawMaterialButton(
                     onPressed: () async {
                       Eintrag tempEintrag = new Eintrag(
@@ -213,13 +202,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           _inputUsage.text,
                           DateFormat('dd.MM.yyyy kk:mm')
                               .format(DateTime.now()));
+                      //todo Fehler beheben
                       await DBProvider.db.newEintrag(tempEintrag);
-
-                      if(boolbroke() == true) {
-                        DataModel().showAlertDialog(context, "Tja, reicht wohl nicht", "Du hast dein Konto überzogen und bist nun im Minus");
+                      if(await AlertDialogs().boolbroke() == true) {
+                        AlertDialogs().showAlertDialog(context, "Tja, reicht wohl nicht", "Du hast dein Konto überzogen und bist nun im Minus");
                       }
-                      if(compare() == true) {
-                        DataModel().showAlertDialog(context, "Durchschnittliche Ausgaben", "Du hast nun die monatlichen Durchschnittausgaben "
+                      if(await AlertDialogs().compare() == true) {
+                        AlertDialogs().showAlertDialog(context, "Durchschnittliche Ausgaben", "Du hast nun die monatlichen Durchschnittausgaben "
                             "eines Studenten von 819€ erreicht.");
                       }
                       setState(() {

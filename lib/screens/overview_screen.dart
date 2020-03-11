@@ -1,3 +1,4 @@
+import 'package:finanz_app/model/alertDialog.dart';
 import 'package:finanz_app/model/data_model.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
@@ -78,6 +79,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                                     background: Container(color: Colors.red),
                                     onDismissed: (direction) {
                                       DBProvider.db.deleteClient(item.id);
+                                      AlertDialogs().isNotBroke();
                                       setState(() {}); // Reload Kontostand
                                     },
                                     child: overviewCard(
