@@ -46,6 +46,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
+  //Weiterleitung zur Einzelansicht der Kategorien
   Widget categoryList(title, image, modelString, color) {
     return GestureDetector(
         onTap: () {

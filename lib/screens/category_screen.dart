@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../model/data_model.dart';
 import '../widgets/appBar_widget.dart';
 import 'categories_screen.dart';
-
+//Einzel-Kategorie-Ansichr
 class CategoryScreen extends StatefulWidget {
   final Cat cat;
 
@@ -41,12 +41,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                   child: Column(
                     children: <Widget>[
+                      //Gesamtkontostand
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           DataModel().getKontostand(context),
                         ],
                       ),
+                      //Kontostand für Einzelkategorie
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -58,6 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               ),
             ),
+            //Anzeige der Einträge
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -97,6 +100,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   Eintrag item = snapshot.data[snapshot.data.length - index -1];
+                                  //Wegwischen/ Löschen von Einträgen
                                   return Dismissible(
                                     key: UniqueKey(),
                                     background: Container(color: Colors.red),

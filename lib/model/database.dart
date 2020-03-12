@@ -33,6 +33,7 @@ class DBProvider {
     });
   }
 
+  //Neuer Eintrag in die Datenbank
   newEintrag(Eintrag newEintrag) async {
     final db = await database;
     //get the biggest id in the table
@@ -59,6 +60,7 @@ class DBProvider {
     return res.isNotEmpty ? Eintrag.fromMap(res.first) : null;
   }
 
+  //Abruf aller Listeneinträge
   Future<List<Eintrag>> getAllEintraege() async {
     final db = await database;
     var res = await db.query("Eintrag");
@@ -67,6 +69,7 @@ class DBProvider {
     return list;
   }
 
+  //Abruf aller Einträge einer bestimmten Kategorie
   Future<List<Eintrag>> getAllEintraegeCategory(String category) async {
     final db = await database;
     var res =
@@ -86,7 +89,7 @@ class DBProvider {
     db.rawDelete("Delete * from Eintrag");
   }
 
-  //GesamtKontostand berechnen
+  //Abruf des Gesamtkontostandes
   Future<double> getTotal() async {
     final db = await database;
     double temptotal = 0;
@@ -94,6 +97,8 @@ class DBProvider {
     temptotal = await result[0]['Total'];
     return temptotal;
   }
+
+  //Abruf des Kontostandes für eine bestimmte Kategorie
   Future<double> getCategorySum(String category) async{
     final db = await database;
     double tempcategory = 0;

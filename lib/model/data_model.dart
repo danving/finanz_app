@@ -9,8 +9,8 @@ import '../screens/categories_screen.dart';
 import 'database.dart';
 
 class DataModel{
-//Für die NavBar
-  static int currentIndex = 0;//für BottomNavBar
+//für BottomNavBar
+  static int currentIndex = 0;
 
   static final pages = <Widget> [
     HomeScreen(),
@@ -20,6 +20,7 @@ class DataModel{
   ];
 //Ende für die NavBar
 
+  //Liste für die Kategorien
   List<String> categories = [
     "Arbeit",
     "Haushalt",
@@ -55,7 +56,7 @@ class DataModel{
 
 
 
-
+// Anzeige des Kontostandes
   Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
     return FutureBuilder<double>(
       future: DBProvider.db.getTotal(), // a previously-obtained Future<String> or null
@@ -105,9 +106,10 @@ class DataModel{
     );
   }
 
-  Widget getKontostandCategory(BuildContext context, String category) {//Textelement zur Kontostandsanzeige
+  //Anzeige des Kontostands für die einzelnen Kategorien
+  Widget getKontostandCategory(BuildContext context, String category) {
     return FutureBuilder<double>(
-      future: DBProvider.db.getCategorySum(category), // a previously-obtained Future<String> or null
+      future: DBProvider.db.getCategorySum(category),
       builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
         List<Widget> children;
 
