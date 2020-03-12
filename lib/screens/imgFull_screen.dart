@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
+
 class ImgFullScreen extends StatefulWidget {
   AsyncSnapshot<List> snapshot;
   int curIndex;
@@ -34,6 +35,7 @@ class _ImgFullScreenState extends State<ImgFullScreen> {
       body: Column(
         children: <Widget>[
           Container(
+            //Todo Render overflow
             height: MediaQuery.of(context).size.height - 135,
             child: PhotoViewGallery.builder(
               pageController: _controller,

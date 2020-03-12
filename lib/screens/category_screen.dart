@@ -27,7 +27,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             Center(
               //Kontostandanzeige
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Container(
                   alignment: Alignment.center,
                   height: 125,

@@ -4,7 +4,6 @@ import 'package:finanz_app/screens/overview_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../screens/categories_screen.dart';
 import 'database.dart';
 
@@ -12,13 +11,15 @@ class DataModel{
 //für BottomNavBar
   static int currentIndex = 0;
 
-  static final pages = <Widget> [
+  static bool isbroke = false;
+
+  static final pages = <Widget>[
     HomeScreen(),
     OverviewScreen(),
     CategoriesScreen(),
     CameraScreen(),
   ];
-//Ende für die NavBar
+
 
   //Liste für die Kategorien
   List<String> categories = [
@@ -55,11 +56,11 @@ class DataModel{
   }
 
 
-
-// Anzeige des Kontostandes
-  Widget getKontostand(BuildContext context) {//Textelement zur Kontostandsanzeige
+  Widget getKontostand(BuildContext context) {
+    //Textelement zur Kontostandsanzeige
     return FutureBuilder<double>(
-      future: DBProvider.db.getTotal(), // a previously-obtained Future<String> or null
+      future: DBProvider.db.getTotal(),
+      // a previously-obtained Future<String> or null
       builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
         List<Widget> children;
 
@@ -67,7 +68,8 @@ class DataModel{
           children = <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: Text('${snapshot.data}' + " €", style: TextStyle(fontSize: 40)),
+              child: Text(
+                  '${snapshot.data}' + " €", style: TextStyle(fontSize: 40)),
             )
           ];
         } else if (snapshot.hasError) {
@@ -117,7 +119,8 @@ class DataModel{
           children = <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: Text('${snapshot.data}' + " €", style: TextStyle(fontSize: 25)),
+              child: Text(
+                  '${snapshot.data}' + " €", style: TextStyle(fontSize: 25)),
             )
           ];
         } else if (snapshot.hasError) {

@@ -40,6 +40,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 28,
+                  color: Colors.teal,
                 ),
               ),
               Padding(
@@ -49,7 +50,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
                   children: <Widget>[
                     Text(
                       "Danke fürs Herunterladen unserer App 'Hoffentlich Reicht's. Die App soll dir helfen deine Finanzen, "
-                      "mit allen  möglichen Ausgaben, im Überblick zu behalten. Im besten Fall soll sie dir helfen am Ende "
+                      "mit allen  möglichen Ausgaben, im Überblick zu behalten. Im besten Fall soll sie dir sogar helfen am Ende "
                       "des Monats noch genügend Geld auf dem Konto zu haben, sodass du dich nicht nur von Nudeln mit Ketchup "
                       "ernähren musst. Viel Erfolg damit!",
                       textAlign: TextAlign.justify,
@@ -126,6 +127,9 @@ class _InitializationScreenState extends State<InitializationScreen> {
                     Text(
                       "Created by Andreas Enns & Dan Vi Nguyen",
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.teal,
+                      ),
                     ),
                   ],
                 ),
