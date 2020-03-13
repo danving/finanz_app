@@ -6,8 +6,8 @@ import 'package:photo_view/photo_view_gallery.dart';
 
 
 class ImgFullScreen extends StatefulWidget {
-  AsyncSnapshot<List> snapshot;
-  int curIndex;
+  final AsyncSnapshot<List> snapshot;
+  final int curIndex;
 
   ImgFullScreen({Key key, @required this.snapshot, @required this.curIndex})
       : super(key: key);
@@ -34,9 +34,8 @@ class _ImgFullScreenState extends State<ImgFullScreen> {
       appBar: appBarWidget("Bon-Kamera", true),
       body: Column(
         children: <Widget>[
-          Container(
+          Expanded(
             //Todo Render overflow
-            height: MediaQuery.of(context).size.height - 135,
             child: PhotoViewGallery.builder(
               pageController: _controller,
               itemCount: widget.snapshot.data.length,

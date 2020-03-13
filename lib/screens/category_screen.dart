@@ -81,9 +81,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               ),
             ), //Kontostandanzeige
-            Scrollbar(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 280,
+            Expanded(
+              child: Scrollbar(
                 child: Center(
                   child: CustomScrollView(
                     slivers: <Widget>[

@@ -59,12 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Spacer(flex: 1),
               Center(
                 //Kontostandanzeige
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 0, bottom: 0, left: 40, right: 40),
+                  padding: const EdgeInsets.all(20),
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
@@ -85,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 //Betrag Eingabe
                 padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, left: 40, right: 40),
+                    top: 0, bottom: 0, left: 30, right: 30),
                 child: Center(
                   child: TextField(
                     maxLength: 5,
@@ -110,11 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Betrag Eingabe
-              Spacer(flex: 1),
               Padding(
                 //Eingabe Verwendungszweck
                 padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, left: 40, right: 40),
+                    top: 0, bottom: 0, left: 30, right: 30),
                 child: Center(
                   child: TextField(
                     maxLength: 12,
@@ -136,11 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Spacer(flex: 1),
               Padding(
                 //Dropdown
                 padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, left: 40, right: 40),
+                    top: 0, bottom: 0, left: 30, right: 30),
                 child: Center(
                   child: DropdownButton<String>(
                     hint: Text(
@@ -161,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ), //Dropdown
-              Spacer(flex: 1),
+              Spacer(flex: 20),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, left: 40, right: 40),
@@ -195,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fillColor: Colors.greenAccent[700],
                       padding: const EdgeInsets.all(15.0),
                     ),
-                    Spacer(),
+                    Spacer(flex: 2),
                     RawMaterialButton(
                       onPressed: () async {
                         Eintrag tempEintrag = new Eintrag(
@@ -245,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Spacer(flex: 1)
+              Spacer(flex: 20)
             ],
           ),
         ),

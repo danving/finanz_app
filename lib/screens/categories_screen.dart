@@ -23,21 +23,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: Scaffold(
         appBar: appBarWidget("Kategorien", false),
         body: Scrollbar(
-          child: Container(
-            child: ListView(
-              children: <Widget>[
-                categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0],Colors.blueGrey[100]),
-                categoryList(DataModel().categories[1], "assets/svg/home.svg",DataModel().categories[1], Colors.blue[100]),
-                categoryList(DataModel().categories[2], "assets/svg/car.svg",DataModel().categories[2], Colors.cyan[100]),
-                categoryList(DataModel().categories[3], "assets/svg/airport.svg",DataModel().categories[3],Colors.greenAccent[100]),
-                categoryList(DataModel().categories[4], "assets/svg/school.svg",DataModel().categories[4], Colors.limeAccent[100]),
-                categoryList(DataModel().categories[5], "assets/svg/cloth.svg",DataModel().categories[5], Colors.amberAccent[100]),
-                categoryList(DataModel().categories[6], "assets/svg/food.svg",DataModel().categories[6],Colors.orange[100]),
-                categoryList(DataModel().categories[7], "assets/svg/party.svg",DataModel().categories[7], Colors.deepOrange[100]),
-                categoryList(DataModel().categories[8], "assets/svg/media.svg",DataModel().categories[8], Colors.red[100]),
-                categoryList(DataModel().categories[9], "assets/svg/present.svg",DataModel().categories[9],Colors.pink[100]),
-                categoryList(DataModel().categories[10], "assets/svg/other.svg", DataModel().categories[10], Colors.grey[100]),
-              ],
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Container(
+              child: ListView(
+                children: <Widget>[
+                  categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0],Colors.blueGrey[100]),
+                  categoryList(DataModel().categories[1], "assets/svg/home.svg",DataModel().categories[1], Colors.blue[100]),
+                  categoryList(DataModel().categories[2], "assets/svg/car.svg",DataModel().categories[2], Colors.cyan[100]),
+                  categoryList(DataModel().categories[3], "assets/svg/airport.svg",DataModel().categories[3],Colors.greenAccent[100]),
+                  categoryList(DataModel().categories[4], "assets/svg/school.svg",DataModel().categories[4], Colors.limeAccent[100]),
+                  categoryList(DataModel().categories[5], "assets/svg/cloth.svg",DataModel().categories[5], Colors.amberAccent[100]),
+                  categoryList(DataModel().categories[6], "assets/svg/food.svg",DataModel().categories[6],Colors.orange[100]),
+                  categoryList(DataModel().categories[7], "assets/svg/party.svg",DataModel().categories[7], Colors.deepOrange[100]),
+                  categoryList(DataModel().categories[8], "assets/svg/media.svg",DataModel().categories[8], Colors.red[100]),
+                  categoryList(DataModel().categories[9], "assets/svg/present.svg",DataModel().categories[9],Colors.pink[100]),
+                  categoryList(DataModel().categories[10], "assets/svg/other.svg", DataModel().categories[10], Colors.grey[100]),
+                ],
+              ),
             ),
           ),
         ),
@@ -66,9 +69,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               width: 60,
               height: 60,
             ),
-            title: Text(
-              title,
-              style: TextStyle(fontSize: 18),
+            title: Row(
+              children: <Widget>[
+                Spacer(),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 18),
+                ),
+                Spacer(),
+              ],
             ),
           ),
         ),

@@ -77,9 +77,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   ),
                 ),
               ),
-              Scrollbar(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - 320,
+              Expanded(
+                child: Scrollbar(
                   child: Center(
                     child: CustomScrollView(
                       slivers: <Widget>[
