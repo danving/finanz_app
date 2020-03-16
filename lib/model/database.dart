@@ -8,6 +8,7 @@ import 'eintrag.dart';
 
 class DBProvider {
   DBProvider._();
+
   static final DBProvider db = DBProvider._();
   Database _database;
 
@@ -21,17 +22,26 @@ class DBProvider {
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "TestDB.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE Eintrag ("
-          "id INTEGER PRIMARY KEY,"
-          "minus BIT,"
-          "amount Double,"
-          "category TEXT,"
-          "usage TEXT,"
-          "date TEXT"
-          ")");
-    });
+    return await openDatabase(
+      path,
+      version: 1,
+      onOpen: (db) {},
+      onCreate: (Database db, int version) async {
+        await db.execute("CREATE TABLE Eintrag ("
+            "id INTEGER PRIMARY KEY,"
+            "minus BIT,"
+            "amount Double,"
+            "category TEXT,"
+            "usage TEXT,"
+            "date TEXT"
+            ")");
+        await db.execute("CREATE TABLE Bools ("
+            "id INTEGER PRIMARY KEY,"
+            "name TEXT"
+            "value BIT,"
+            ")");
+      },
+    );
   }
 
   //Neuer Eintrag in die Datenbank
@@ -51,6 +61,23 @@ class DBProvider {
           newEintrag.category,
           newEintrag.usage,
           newEintrag.date
+        ]);
+    return raw;
+  }
+
+  newBool(String name, bool value) async {
+    final db = await database;
+    //get the biggest id in the table
+    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Eintrag");
+    int id = table.first["id"];
+    //insert to the table using the new id
+    var raw = await db.rawInsert(
+        "INSERT Into Bools (id, name, value)"
+            " VALUES (?,?)",
+        [
+          id,
+          name,
+          value
         ]);
     return raw;
   }
@@ -100,19 +127,23 @@ class DBProvider {
   }
 
   //Abruf des Kontostandes für eine bestimmte Kategorie
-  Future<double> getCategorySum(String category) async{
+  Future<double> getCategorySum(String category) async {
     final db = await database;
     double tempcategory = 0;
-    var catResult = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE category = ?", [category]);
+    var catResult = await db.rawQuery(
+        "SELECT SUM(amount) as Total FROM Eintrag WHERE category = ?",
+        [category]);
     tempcategory = await catResult[0]['Total'];
     return tempcategory;
-}
+  }
 
   Future<double> getMinusTotal() async {
     var now = DateFormat('MM').format(DateTime.now());
     final db = await database;
     double tempMinus = 0;
-    var minusRes = await db.rawQuery("SELECT SUM(amount) as Total FROM Eintrag WHERE amount < 0 AND  substr(date, 4, 2) = ?", [now]);
+    var minusRes = await db.rawQuery(
+        "SELECT SUM(amount) as Total FROM Eintrag WHERE amount < 0 AND  substr(date, 4, 2) = ?",
+        [now]);
     tempMinus = await minusRes[0]['Total'];
     return tempMinus;
   }
