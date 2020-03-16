@@ -5,6 +5,7 @@ import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,7 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 0, bottom: 0, left: 30, right: 30),
                 child: Center(
                   child: TextField(
-                    maxLength: 5,
+                    maxLength: 5, 
+                    inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
                     keyboardType: TextInputType.number,
                     controller: _addKonto,
                     autofocus: false,

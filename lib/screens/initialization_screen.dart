@@ -4,6 +4,7 @@ import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class InitializationScreen extends StatefulWidget {
@@ -76,6 +77,8 @@ class _InitializationScreenState extends State<InitializationScreen> {
                 child: Column(
                   children: <Widget>[
                     TextField(
+                      maxLength: 5,
+                      inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
                       keyboardType: TextInputType.number,
                       controller: _initKonto,
                       autofocus: false,
