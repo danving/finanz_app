@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:finanz_app/model/data_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'eintrag.dart';
 
@@ -35,11 +37,6 @@ class DBProvider {
             "usage TEXT,"
             "date TEXT"
             ")");
-        await db.execute("CREATE TABLE Bools ("
-            "id INTEGER PRIMARY KEY,"
-            "name TEXT"
-            "value BIT,"
-            ")");
       },
     );
   }
@@ -65,22 +62,6 @@ class DBProvider {
     return raw;
   }
 
-  newBool(String name, bool value) async {
-    final db = await database;
-    //get the biggest id in the table
-    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Eintrag");
-    int id = table.first["id"];
-    //insert to the table using the new id
-    var raw = await db.rawInsert(
-        "INSERT Into Bools (id, name, value)"
-            " VALUES (?,?)",
-        [
-          id,
-          name,
-          value
-        ]);
-    return raw;
-  }
 
   getClient(int id) async {
     final db = await database;
@@ -138,11 +119,12 @@ class DBProvider {
   }
 
   Future<double> getMinusTotal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var now = DateFormat('MM').format(DateTime.now());
     final db = await database;
     double tempMinus = 0;
     var minusRes = await db.rawQuery(
-        "SELECT SUM(amount) as Total FROM Eintrag WHERE amount < 0 AND  substr(date, 4, 2) = ?",
+        "SELECT SUM(amount) as Total FROM Eintrag WHERE amount < 0 AND substr(date, 4, 2) = ?",
         [now]);
     tempMinus = await minusRes[0]['Total'];
     return tempMinus;

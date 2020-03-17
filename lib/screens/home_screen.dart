@@ -213,13 +213,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Tja, reicht wohl nicht",
                               "Du hast dein Konto überzogen und bist nun im Minus");
                         }
-
                         if (await AlertDialogs().compare() == true) {
                           AlertDialogs().showAlertDialog(
                               context,
                               "Durchschnittliche Ausgaben",
                               "Du hast nun die monatlichen Durchschnittausgaben "
                                   "eines Studenten von 819€ erreicht.");
+                        } else {
+                          AlertDialogs().showAlertDialog(
+                              context,
+                              "Ausgaben i.O.",
+                              "Yeah");
                         }
 
 

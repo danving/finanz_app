@@ -5,13 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/categories_screen.dart';
+import 'package:finanz_app/model/database.dart';
 import 'database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataModel{
 //für BottomNavBar
   static int currentIndex = 0;
 
-  static bool isbroke = false;
+
 
   static final pages = <Widget>[
     HomeScreen(),
@@ -37,6 +39,7 @@ class DataModel{
   ];
 
   DateTime currentBackPressTime;
+
 
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();

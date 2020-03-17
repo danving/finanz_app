@@ -1,3 +1,4 @@
+import 'package:finanz_app/model/alertDialog.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/screens/home_screen.dart';
@@ -30,6 +31,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBarWidget("Hoffentlich Reicht's", false),
       body: Container(
         child: Padding(
@@ -114,6 +116,8 @@ class _InitializationScreenState extends State<InitializationScreen> {
                         "Initialisierung",
                         DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
                     await DBProvider.db.newEintrag(tempEintrag);
+                    await AlertDialogs().isBrokeToSP();
+                    await AlertDialogs().compareToSP();
                     setState(() {
                       _initKonto.clear();
                     });

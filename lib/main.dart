@@ -2,6 +2,7 @@ import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/screens/initialization_screen.dart';
 import 'package:finanz_app/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'model/data_model.dart';
 import 'model/database.dart';
 import 'model/eintrag.dart';
