@@ -23,6 +23,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              //Anzeige des Gesamtkontostandes
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Center(
@@ -37,15 +38,18 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
+                      //Abruf aus Datenbank
                       child: DataModel().getKontostand(context),
                     ),
                   ),
                 ),
               ),
+              //Anzeige der bisherigen Einträge
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 15.0, right: 15.0, top: 8.0, bottom: 10.0),
+                  //Überschriften für die Spalten
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -77,6 +81,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   ),
                 ),
               ),
+              //Liste aller bisherigen Einnahmen und Ausgaben
               Expanded(
                 child: Scrollbar(
                   child: Center(

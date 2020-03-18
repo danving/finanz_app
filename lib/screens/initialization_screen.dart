@@ -18,7 +18,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
 
   @override
   void initState() {
-    _initKonto = new TextEditingController();
+    _initKonto = new TextEditingController(); //Textcontroller für Eingabe des Kontostandes
     super.initState();
   }
 
@@ -37,6 +37,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
         child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Column(
+            //Vorstellungstext
             children: <Widget>[
               Text(
                 "Hoffentlich Reicht's",
@@ -74,6 +75,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
                   ],
                 ),
               ),
+              //Textfeld für Eingabe des Kontostandes
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
@@ -103,12 +105,14 @@ class _InitializationScreenState extends State<InitializationScreen> {
                   ],
                 ),
               ),
+              //Button zum Übernehmen des eingegebenen Kontostandes
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FlatButton(
                   child: Text("Kontostand übernehmen"),
                   color: Colors.teal[50],
                   onPressed: () async {
+                    //Erstellung eines Eintrags in der Datenbank
                     Eintrag tempEintrag = new Eintrag(
                         true,
                         num.parse(_initKonto.text),
@@ -116,8 +120,9 @@ class _InitializationScreenState extends State<InitializationScreen> {
                         "Initialisierung",
                         DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
                     await DBProvider.db.newEintrag(tempEintrag);
-                    await AlertDialogs().isBrokeToSP();
-                    await AlertDialogs().compareToSP();
+
+                    await AlertDialogs().isBrokeToSP();//Speichern von Elementen in Shared Preferences
+                    await AlertDialogs().compareToSP();//Speichern von Elementen in Shared Preferences
                     setState(() {
                       _initKonto.clear();
                     });

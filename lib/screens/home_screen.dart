@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _addKonto; //Eingabe Betrag
   TextEditingController _inputUsage; //Eingabe Verwendungszweck
 
-
+  //Liste für Kategorienauswahl fürs Dropdown
   List<String> dropDownCategories = [
     "Wähle eine Kategorie", //TODO ändern
     "Arbeit",
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              ), //Kontostandanzeige
+              ),
               Spacer(flex: 1),
               Padding(
                 //Betrag Eingabe
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: TextField(
                     maxLength: 5, 
-                    inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
+                    inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))], //Nur Eingabe von Zahlen und Punkt möglich
                     keyboardType: TextInputType.number,
                     controller: _addKonto,
                     autofocus: false,
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              ), //Betrag Eingabe
+              ),
               Padding(
                 //Eingabe Verwendungszweck
                 padding: const EdgeInsets.only(
@@ -160,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ), //Dropdown
               Spacer(flex: 20),
+              //Plus-Button für Einnahmen
               Padding(
                 padding: const EdgeInsets.only(
                     top: 0, bottom: 0, left: 40, right: 40),
@@ -193,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fillColor: Colors.greenAccent[700],
                       padding: const EdgeInsets.all(15.0),
                     ),
+                    //Minus-Button für Ausgaben
                     Spacer(flex: 2),
                     RawMaterialButton(
                       onPressed: () async {
@@ -206,26 +208,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         await DBProvider.db.newEintrag(tempEintrag);
 
                         //todo Fehler beheben
-
+                        //Überprüfung ob Konto im Minus ist
                         if (await AlertDialogs().boolbroke() == true) {
-                          AlertDialogs().showAlertDialog(
+                          AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
                               context,
                               "Tja, reicht wohl nicht",
                               "Du hast dein Konto überzogen und bist nun im Minus");
                         }
+
+                        //Überprüfen. ob durchschnittliche Ausgaben eines Studenten überschritten wurde
                         if (await AlertDialogs().compare() == true) {
-                          AlertDialogs().showAlertDialog(
+                          AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
                               context,
                               "Durchschnittliche Ausgaben",
                               "Du hast nun die monatlichen Durchschnittausgaben "
                                   "eines Studenten von 819€ erreicht.");
-                        } else {
-                          AlertDialogs().showAlertDialog(
-                              context,
-                              "Ausgaben i.O.",
-                              "Yeah");
                         }
-
 
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";

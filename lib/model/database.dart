@@ -118,8 +118,8 @@ class DBProvider {
     return tempcategory;
   }
 
+  //Abruf des Kontstandes nur mit Ausgaben
   Future<double> getMinusTotal() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     var now = DateFormat('MM').format(DateTime.now());
     final db = await database;
     double tempMinus = 0;

@@ -26,6 +26,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           child: Padding(
             padding: EdgeInsets.all(5),
             child: Container(
+              //Anzeige aller Kategorien mit Bild
               child: ListView(
                 children: <Widget>[
                   categoryList(DataModel().categories[0], "assets/svg/briefcase.svg",DataModel().categories[0],Colors.blueGrey[100]),
@@ -49,7 +50,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  //Weiterleitung zur Einzelansicht der Kategorien
+  //Erstellung der Cards und Weiterleitung zur Einzelansicht der Kategorien
   Widget categoryList(title, image, modelString, color) {
     return GestureDetector(
         onTap: () {

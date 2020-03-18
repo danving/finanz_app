@@ -8,17 +8,16 @@ class AlertDialogs {
 //Shared Prefereces für die Abfrage, ob das Konto überzogen wurde
   isBrokeToSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isBroke', false);
+    prefs.setBool('isBroke', false); //False, um zu prüfen, ob das Konto bereits im Minus war
   }
 
   //Abfrage, ob Konto im Minus ist
   boolbroke() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var broke = await DBProvider.db.getTotal();
+    var broke = await DBProvider.db.getTotal(); //Gesamtkontostand
     var isBroke = prefs.getBool('isBroke');
-    //Wenn Konto im Minus ist und vorher nicht im Minus war
-    if (broke < 0 && isBroke == false) {
-      //dann isBroke auf true, für nächste Minus-Abfrage und Aufruf AlertDialog
+    if (broke < 0 && isBroke == false) { //Wenn Konto im Minus ist und vorher nicht im Minus war
+      //isBroke auf true für nächtse Abfrage
       await prefs.setBool('isBroke', true);
       return true;
     }
@@ -28,7 +27,7 @@ class AlertDialogs {
   //Überprüfen, ob Konto wieder im Plus ist
   void isNotBroke() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var notBroke = await DBProvider.db.getTotal();
+    var notBroke = await DBProvider.db.getTotal(); //Gesamtkontostand
     if (notBroke >= 0) {
       // isBroke wieder auf false, damit beim erneuten ins Minus der Alert Dialog aufgerufen wird
       await prefs.setBool('isBroke', false);
@@ -38,13 +37,47 @@ class AlertDialogs {
   //alreadyComp(are) als Shared Preferences
   compareToSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('alreadyComp', false);
-    print(prefs.getBool('alreadyComp'));
-    prefs.setString('month', DateFormat('MM').format(DateTime.now()));
-    print(prefs.getString('month'));
-    print('init');
+    prefs.setBool('alreadyComp', false); //False, umzu überprüfen, ob Abfrage bereits gemacht wurde
+    prefs.setString('month', DateFormat('MM').format(DateTime.now())); // Monat bei Initialisierung des Kontostandes
   }
 
+  compareMonth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var tempAlreadyComp = prefs.getBool('alreadyComp');
+    print(tempAlreadyComp);
+    var prefMonth = prefs.getString('month');
+    print(prefMonth);
+    var currentMonth = DateFormat('MM').format(DateTime.now());
+    print(currentMonth);
+    if(prefMonth != currentMonth) { //Vergleich gespeicherter Monat mit Momentanen
+      prefs.setBool('alreadyComp', false); //alreadyComp auf false, weil für den neuen Monat noch nicht überprüft wurde
+      print(prefs.getBool('alreadyComp'));
+      prefs.setString('month', DateFormat('MM').format(DateTime.now())); //Aktuellen Monat ins prefs speichern
+      print(prefs.getString('month'));
+      return tempAlreadyComp;
+    } else {
+      print("Falseee");
+      print(tempAlreadyComp);
+      return tempAlreadyComp;
+    }
+  }
+
+  compare() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var tempAlreadyComp = prefs.getBool('alreadyComp');
+    var compStudent = -819; // Durchschnittliche, monatliche Ausgaben
+    var compAusgabe = await DBProvider.db.getMinusTotal(); //Gesamte Ausgaben
+    if(compAusgabe <= compStudent && compareMonth() == false){ //Wenn durchschnitts Ausgaben in diesem Monat überschritten werden
+      print("geht rein");
+      prefs.setBool('alreadyComp', true); // alreadyComp auf true, weil Dialog diesen Moant schon aufgerufen wurde
+      return true;
+    } else {
+      print("geht nicht rein");
+      return false;
+    }
+  }
+
+/*
   //Vergleich, ob ein neuer Monat ist, damit Alert Dialog nochmals aufgerufen werden kann
   sameMonth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -78,7 +111,7 @@ class AlertDialogs {
       return false;
     }
   }
-
+*/
   void showAlertDialog(BuildContext context, title, content) {
     showDialog(
         context: context,

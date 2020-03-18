@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../model/data_model.dart';
 import '../widgets/appBar_widget.dart';
 import 'categories_screen.dart';
+
 //Einzel-Kategorie-Ansichr
 class CategoryScreen extends StatefulWidget {
   final Cat cat;
@@ -41,18 +42,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      //Gesamtkontostand
+                      // Anzeige Gesamtkontostand
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
+                          //Abruf aus Datenbank
                           DataModel().getKontostand(context),
                         ],
                       ),
-                      //Kontostand für Einzelkategorie
+                      //Anzeige Kontostand für spezifische Kategorie
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          DataModel().getKontostandCategory(context, widget.cat.category)
+                          //Abruf aus Datenbank
+                          DataModel().getKontostandCategory(
+                              context, widget.cat.category)
                         ],
                       ),
                     ],
@@ -60,27 +64,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               ),
             ),
-            //Anzeige der Einträge
+            //Anzeige der bisherigen Einträge
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 8.0, bottom: 10.0),
+                //Überschriften der Spalten
                 child: Row(
                   children: <Widget>[
-                    Expanded(flex: 2, child: Text("Betrag", style: TextStyle(fontWeight: FontWeight.bold),)),
+                    Expanded(
+                        flex: 2,
+                        child: Text(
+                          "Betrag",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
                     Spacer(),
-                    Expanded(flex: 5, child: Text("Kategorie", style: TextStyle(fontWeight: FontWeight.bold),)),
+                    Expanded(
+                        flex: 5,
+                        child: Text(
+                          "Kategorie",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
                     Spacer(),
-                    Expanded(flex: 3, child: Row(
-                      children: <Widget>[
-                        Spacer(),
-                        Text("Datum", style: TextStyle(fontWeight: FontWeight.bold),),
-                      ],
-                    )),
+                    Expanded(
+                        flex: 3,
+                        child: Row(
+                          children: <Widget>[
+                            Spacer(),
+                            Text(
+                              "Datum",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
                   ],
                 ),
               ),
             ), //Kontostandanzeige
+            //Liste aller bisherigen Einnahmen und Ausgaben
             Expanded(
               child: Scrollbar(
                 child: Center(
@@ -88,7 +109,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     slivers: <Widget>[
                       SliverFillRemaining(
                         child: FutureBuilder<List<Eintrag>>(
-                          future: DBProvider.db.getAllEintraegeCategory(widget.cat.category),
+                          future: DBProvider.db
+                              .getAllEintraegeCategory(widget.cat.category),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<Eintrag>> snapshot) {
                             if (snapshot.hasData) {
@@ -98,7 +120,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 //reverse: false,
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  Eintrag item = snapshot.data[snapshot.data.length - index -1];
+                                  Eintrag item = snapshot
+                                      .data[snapshot.data.length - index - 1];
                                   //Wegwischen/ Löschen von Einträgen
                                   return Dismissible(
                                     key: UniqueKey(),
@@ -125,7 +148,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 ),
               ),
-            )            ],
+            )
+          ],
         ),
       ),
     );
