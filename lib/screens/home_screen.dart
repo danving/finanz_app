@@ -206,8 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             DateFormat('dd.MM.yyyy kk:mm')
                                 .format(DateTime.now()));
                         await DBProvider.db.newEintrag(tempEintrag);
-
-                        //todo Fehler beheben
                         //Überprüfung ob Konto im Minus ist
                         if (await AlertDialogs().boolbroke() == true) {
                           AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
@@ -215,7 +213,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Tja, reicht wohl nicht",
                               "Du hast dein Konto überzogen und bist nun im Minus");
                         }
-
                         //Überprüfen. ob durchschnittliche Ausgaben eines Studenten überschritten wurde
                         if (await AlertDialogs().compare() == true) {
                           AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
@@ -224,7 +221,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               "Du hast nun die monatlichen Durchschnittausgaben "
                                   "eines Studenten von 819€ erreicht.");
                         }
-
                         setState(() {
                           tempCategory = "Wähle eine Kategorie";
                           _addKonto.clear();

@@ -12,8 +12,14 @@ Widget overviewCard(amount, category, usage, date) {
             Expanded(
               flex: 2,
               child: Column(
-                children: <Widget>[
-                  Text(amount),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Spacer(),
+                      Text(amount),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -48,12 +54,18 @@ Widget overviewCard(amount, category, usage, date) {
                   Row(
                     children: <Widget>[
                       Spacer(),
-                      Text(date.substring(0, 10), )],
+                      Text(
+                        date.substring(0, 10),
+                      )
+                    ],
                   ),
                   Row(
                     children: <Widget>[
                       Spacer(),
-                      Text(date.substring(11, 16), )],
+                      Text(
+                        date.substring(11, 16),
+                      )
+                    ],
                   )
                 ],
               ),

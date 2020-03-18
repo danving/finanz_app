@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:finanz_app/model/data_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'eintrag.dart';
 
@@ -130,6 +128,7 @@ class DBProvider {
     return tempMinus;
   }
 }
+
 
 /* blockOrUnblock(Eintrag client) async {
     final db = await database;

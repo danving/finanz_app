@@ -1,13 +1,11 @@
 import 'package:finanz_app/screens/camera_screen.dart';
 import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/screens/overview_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../screens/categories_screen.dart';
 import 'package:finanz_app/model/database.dart';
 import 'database.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DataModel{
 //für BottomNavBar

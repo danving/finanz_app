@@ -1,4 +1,3 @@
-import 'package:finanz_app/model/data_model.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -37,81 +36,21 @@ class AlertDialogs {
   //alreadyComp(are) als Shared Preferences
   compareToSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('alreadyComp', false); //False, umzu überprüfen, ob Abfrage bereits gemacht wurde
-    prefs.setString('month', DateFormat('MM').format(DateTime.now())); // Monat bei Initialisierung des Kontostandes
-  }
-
-  compareMonth() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var tempAlreadyComp = prefs.getBool('alreadyComp');
-    print(tempAlreadyComp);
-    var prefMonth = prefs.getString('month');
-    print(prefMonth);
-    var currentMonth = DateFormat('MM').format(DateTime.now());
-    print(currentMonth);
-    if(prefMonth != currentMonth) { //Vergleich gespeicherter Monat mit Momentanen
-      prefs.setBool('alreadyComp', false); //alreadyComp auf false, weil für den neuen Monat noch nicht überprüft wurde
-      print(prefs.getBool('alreadyComp'));
-      prefs.setString('month', DateFormat('MM').format(DateTime.now())); //Aktuellen Monat ins prefs speichern
-      print(prefs.getString('month'));
-      return tempAlreadyComp;
-    } else {
-      print("Falseee");
-      print(tempAlreadyComp);
-      return tempAlreadyComp;
-    }
+    prefs.setString('month', "00"); // Monat bei Initialisierung des Kontostandes
   }
 
   compare() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var tempAlreadyComp = prefs.getBool('alreadyComp');
     var compStudent = -819; // Durchschnittliche, monatliche Ausgaben
     var compAusgabe = await DBProvider.db.getMinusTotal(); //Gesamte Ausgaben
-    if(compAusgabe <= compStudent && compareMonth() == false){ //Wenn durchschnitts Ausgaben in diesem Monat überschritten werden
-      print("geht rein");
+    if(compAusgabe <= compStudent && (prefs.getString("month") != DateFormat('MM').format(DateTime.now()))){ //Wenn durchschnitts Ausgaben in diesem Monat überschritten werden
       prefs.setBool('alreadyComp', true); // alreadyComp auf true, weil Dialog diesen Moant schon aufgerufen wurde
+      prefs.setString("month", DateFormat('MM').format(DateTime.now()));
       return true;
-    } else {
-      print("geht nicht rein");
-      return false;
     }
+      return false;
   }
 
-/*
-  //Vergleich, ob ein neuer Monat ist, damit Alert Dialog nochmals aufgerufen werden kann
-  sameMonth() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var tempMonth = prefs.getString('month');
-    print(tempMonth);
-    print("jetztiger Monat");
-    var tempComp = prefs.getBool('alreadyComp');
-    print(tempComp);
-    print("temp Comp voher");
-    if(tempMonth != DateFormat('MM').format(DateTime.now())){
-      prefs.setBool('alreadyComp', false);
-      tempComp = prefs.getBool('alreadyComp');
-      print(tempComp);
-      print("tempComp nachher");
-    }
-    return tempComp;
-  }
-
-  compare() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    double compStudent = -819;
-    double compAusgabe = await DBProvider.db.getMinusTotal();
-    var prefAlreadyComp = prefs.getBool('alreadyComp');
-    if (compAusgabe <= compStudent && this.sameMonth() == false) {
-      prefs.setBool('alreadyComp', true);
-      print(prefs.getBool('alreadyComp'));
-      print("nach Ausgabe");
-      return true;
-    } else {
-      print("false!!!");
-      return false;
-    }
-  }
-*/
   void showAlertDialog(BuildContext context, title, content) {
     showDialog(
         context: context,
