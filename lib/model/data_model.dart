@@ -121,7 +121,7 @@ class DataModel{
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Text(
-                  '${snapshot.data}' + " €", style: TextStyle(fontSize: 25)),
+                  '${snapshot.data.toStringAsFixed(2)}' + " €", style: TextStyle(fontSize: 25)),
             )
           ];
         } else if (snapshot.hasError) {

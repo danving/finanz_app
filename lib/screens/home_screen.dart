@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBarWidget("Hoffentlich reichts", false),
+        appBar: appBarWidget("Hoffentlich Reichts", false),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     cursorColor: Colors.teal[900],
                     decoration: InputDecoration(
                       labelText: "Verwendungszweck",
-                      hintText: "Wocheneinkauf",
+                      hintText: "Einkauf",
                       labelStyle: TextStyle(color: Colors.black),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),

@@ -32,7 +32,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBarWidget("Hoffentlich Reicht's", false),
+      appBar: appBarWidget("Hoffentlich Reichts", false),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -40,7 +40,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
             //Vorstellungstext
             children: <Widget>[
               Text(
-                "Hoffentlich Reicht's",
+                "Hoffentlich Reichts",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 28,
