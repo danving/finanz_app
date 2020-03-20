@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 0, bottom: 0, left: 30, right: 30),
                 child: Center(
                   child: TextField(
-                    maxLength: 5, 
+                    maxLength: 7,
                     inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))], //Nur Eingabe von Zahlen und Punkt möglich
                     keyboardType: TextInputType.number,
                     controller: _addKonto,

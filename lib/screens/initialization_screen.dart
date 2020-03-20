@@ -81,7 +81,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
                 child: Column(
                   children: <Widget>[
                     TextField(
-                      maxLength: 5,
+                      maxLength: 7,
                       inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
                       keyboardType: TextInputType.number,
                       controller: _initKonto,
