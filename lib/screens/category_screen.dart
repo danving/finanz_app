@@ -20,7 +20,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(widget.cat.category, true),
+      appBar: appBarWidget(widget.cat.category, true, context),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

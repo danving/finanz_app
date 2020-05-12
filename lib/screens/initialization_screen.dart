@@ -32,7 +32,10 @@ class _InitializationScreenState extends State<InitializationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBarWidget("Hoffentlich Reichts", false),
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Used for removing back buttoon.
+        title: Text("Hoffentlich Reichts"),
+        backgroundColor: Colors.teal,),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 10),

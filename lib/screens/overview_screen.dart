@@ -18,7 +18,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return WillPopScope(
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
-        appBar: appBarWidget("Übersicht", false),
+        appBar: appBarWidget("Übersicht", false, context),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

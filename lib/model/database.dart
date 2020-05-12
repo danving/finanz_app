@@ -93,7 +93,8 @@ class DBProvider {
 
   deleteAll() async {
     final db = await database;
-    db.rawDelete("Delete * from Eintrag");
+   // db.rawDelete("Delete * from Eintrag");
+    return db.delete("Eintrag");
   }
 
   //Abruf des Gesamtkontostandes

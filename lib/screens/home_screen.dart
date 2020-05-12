@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBarWidget("Hoffentlich Reichts", false),
+        appBar: appBarWidget("Hoffentlich Reichts", false, context),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

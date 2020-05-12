@@ -31,7 +31,7 @@ class _ImgFullScreenState extends State<ImgFullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Bon-Kamera", true),
+      appBar: appBarWidget("Bon-Kamera", true, context),
       body: Column(
         children: <Widget>[
           Expanded(
