@@ -2,7 +2,6 @@ import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/screens/initialization_screen.dart';
 import 'package:finanz_app/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'model/data_model.dart';
 import 'model/database.dart';
 import 'model/eintrag.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(fontFamily: 'Roboto'),
+      theme: ThemeData(),
       home: FutureBuilder<List<Eintrag>>(
           future: DBProvider.db.getAllEintraege(),
           builder:

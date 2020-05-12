@@ -1,30 +1,27 @@
-import 'package:finanz_app/model/alertDialog.dart';
+import 'dart:io';
 import 'package:finanz_app/model/database.dart';
-import 'package:finanz_app/model/eintrag.dart';
-import 'package:finanz_app/screens/home_screen.dart';
 import 'package:finanz_app/widgets/appBar_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'initialization_screen.dart';
 
-class InitializationScreen extends StatefulWidget {
+class ResetScreen extends StatefulWidget {
   @override
-  _InitializationScreenState createState() => _InitializationScreenState();
+  _ResetScreenState createState() => _ResetScreenState();
 }
 
-class _InitializationScreenState extends State<InitializationScreen> {
-  TextEditingController _initKonto; //Kontoinitialisierung
+class _ResetScreenState extends State<ResetScreen> {
+  TextEditingController _inputReset; // Eingabe Reset-Bestätigung
 
   @override
   void initState() {
-    _initKonto = new TextEditingController(); //Textcontroller für Eingabe des Kontostandes
+    _inputReset = new TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _initKonto?.dispose();
+    _inputReset?.dispose();
     super.dispose();
   }
 
@@ -32,12 +29,11 @@ class _InitializationScreenState extends State<InitializationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBarWidget("Hoffentlich Reichts", false),
+      appBar: appBarWidget("Reset", true),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Column(
-            //Vorstellungstext
             children: <Widget>[
               Text(
                 "Hoffentlich Reichts",
@@ -53,10 +49,8 @@ class _InitializationScreenState extends State<InitializationScreen> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "Danke fürs Herunterladen unserer App 'Hoffentlich Reicht's. Die App soll dir helfen deine Finanzen, "
-                      "mit allen  möglichen Ausgaben, im Überblick zu behalten. Im besten Fall soll sie dir sogar helfen am Ende "
-                      "des Monats noch genügend Geld auf dem Konto zu haben, sodass du dich nicht nur von Nudeln mit Ketchup "
-                      "ernähren musst. Viel Erfolg damit!",
+                      "Willst du alle bisherigen Einträge und Bilder löschen und dein Konto neu initialisieren? (Deinen "
+                      "echten Kontostand wird es allerdings nicht zurücksetzen..)",
                       textAlign: TextAlign.justify,
                       style: TextStyle(),
                     ),
@@ -69,66 +63,64 @@ class _InitializationScreenState extends State<InitializationScreen> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "Nun musst du nur noch deinen Kontostand initialisieren und dann kannst du loslegen:",
+                      "Wenn du wirklich alles zurücksetzten willst, dann gib 'LÖSCHEN' in das Textfeld ein.",
                       textAlign: TextAlign.justify,
                     ),
                   ],
                 ),
               ),
-              //Textfeld für Eingabe des Kontostandes
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: <Widget>[
                     TextField(
                       maxLength: 7,
-                      inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
-                      keyboardType: TextInputType.number,
-                      controller: _initKonto,
+                      keyboardType: TextInputType.text,
+                      controller: _inputReset,
                       autofocus: false,
                       cursorColor: Colors.teal[900],
                       decoration: InputDecoration(
-                        labelText: "Initial-Kontostand",
-                        hintText: "100.00",
                         labelStyle: TextStyle(color: Colors.black),
-                        border: OutlineInputBorder(),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.teal[900],
-                          ),
+                          borderSide: BorderSide(color: Colors.teal[900]),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              //Button zum Übernehmen des eingegebenen Kontostandes
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: FlatButton(
-                  child: Text("Kontostand übernehmen"),
-                  color: Colors.teal[50],
-                  onPressed: () async {
-                    //Erstellung eines Eintrags in der Datenbank
-                    Eintrag tempEintrag = new Eintrag(
-                        true,
-                        num.parse(_initKonto.text),
-                        "Initialisierung",
-                        "Initialisierung",
-                        DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
-                    await DBProvider.db.newEintrag(tempEintrag);
-
-                    await AlertDialogs().isBrokeToSP();//Speichern von Elementen in Shared Preferences
-                    await AlertDialogs().compareToSP();//Speichern von Elementen in Shared Preferences
-                    setState(() {
-                      _initKonto.clear();
-                    });
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
+                child: Row(
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        "Nein, lieber nicht.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    Spacer(),
+                    FlatButton(
+                        child: Text(
+                          "Ja, alles löschen!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.teal,
+                          ),
+                        ),
+                        onPressed: () async {
+                          resetApp(_inputReset.text);
+                        }),
+                  ],
                 ),
               ),
               Spacer(),
@@ -151,5 +143,17 @@ class _InitializationScreenState extends State<InitializationScreen> {
         ),
       ),
     );
+  }
+
+  void resetApp(String delString) async {
+    if (delString == 'LÖSCHEN') {
+      await DBProvider.db.deleteAll(); // Löschen der Datenbank
+      //Löschen des Bilderordners
+      Directory dirToDel = await getApplicationDocumentsDirectory();
+      dirToDel = Directory('${dirToDel.path}/images');
+      dirToDel.deleteSync(recursive: true);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => InitializationScreen()));
+    }
   }
 }

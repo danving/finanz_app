@@ -27,7 +27,7 @@ class _CameraScreenState extends State<CameraScreen> {
     return WillPopScope(
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
-        appBar: appBarWidget("Bon-Kamera", true, context),
+        appBar: appBarWidget("Bon-Kamera", true),
         body: Column(
           children: <Widget>[
             Container(

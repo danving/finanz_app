@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-
 class ImgFullScreen extends StatefulWidget {
   final AsyncSnapshot<List> snapshot;
   final int curIndex;
@@ -31,7 +30,7 @@ class _ImgFullScreenState extends State<ImgFullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget("Bon-Kamera", true, context),
+      appBar: appBarWidget("Bon-Kamera", true),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -58,6 +57,7 @@ class _ImgFullScreenState extends State<ImgFullScreen> {
               backgroundDecoration: BoxDecoration(
                 color: Theme.of(context).canvasColor,
               ),
+
               loadingChild: Center(
                 child: CircularProgressIndicator(),
               ),

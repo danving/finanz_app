@@ -1,7 +1,7 @@
 import 'package:finanz_app/model/alertDialog.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
-import 'package:finanz_app/widgets/appBar_widget.dart';
+import 'package:finanz_app/screens/reset_screen.dart';
 import 'package:finanz_app/widgets/bottomNavBar_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:finanz_app/model/data_model.dart';
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _addKonto = new TextEditingController(); //Controller für Ein-/ Ausgaben
-    _inputUsage = new TextEditingController(); //COntroller für Verwendungszeck
+    _inputUsage = new TextEditingController(); //Controller für Verwendungszeck
     super.initState();
   }
 
@@ -55,7 +55,20 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBarWidget("Hoffentlich Reichts", false, context),
+        appBar: AppBar(
+          automaticallyImplyLeading: false, // Used for removing back buttoon.
+          title: Text("Hoffentlich Reichts"),
+          backgroundColor: Colors.teal,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.settings_backup_restore, color: Colors.white),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResetScreen()));
+              },
+            ),
+          ],
+        ),
         body: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: TextField(
                     maxLength: 7,
-                    inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))], //Nur Eingabe von Zahlen und Punkt möglich
+                    inputFormatters: [
+                      WhitelistingTextInputFormatter(RegExp("[0-9.]"))
+                    ],
+                    //Nur Eingabe von Zahlen und Punkt möglich
                     keyboardType: TextInputType.number,
                     controller: _addKonto,
                     autofocus: false,
@@ -208,14 +224,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         await DBProvider.db.newEintrag(tempEintrag);
                         //Überprüfung ob Konto im Minus ist
                         if (await AlertDialogs().boolbroke() == true) {
-                          AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
+                          AlertDialogs().showAlertDialog(
+                              //Aufruf eines Dialogs als Warnung
                               context,
                               "Tja, reicht wohl nicht",
                               "Du hast dein Konto überzogen und bist nun im Minus");
                         }
                         //Überprüfen. ob durchschnittliche Ausgaben eines Studenten überschritten wurde
                         if (await AlertDialogs().compare() == true) {
-                          AlertDialogs().showAlertDialog( //Aufruf eines Dialogs als Warnung
+                          AlertDialogs().showAlertDialog(
+                              //Aufruf eines Dialogs als Warnung
                               context,
                               "Durchschnittliche Ausgaben",
                               "Du hast nun die monatlichen Durchschnittausgaben "
@@ -249,4 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+
+
 }

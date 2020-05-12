@@ -21,7 +21,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return WillPopScope(
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
-        appBar: appBarWidget("Kategorien", false, context),
+        appBar: appBarWidget("Kategorien", true),
         body: Scrollbar(
           child: Padding(
             padding: EdgeInsets.all(5),
