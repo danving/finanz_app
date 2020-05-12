@@ -41,22 +41,22 @@ class DBProvider {
 
   //Neuer Eintrag in die Datenbank
   newEintrag(Eintrag newEintrag) async {
-    final db = await database;
-    //get the biggest id in the table
-    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Eintrag");
-    int id = table.first["id"];
-    //insert to the table using the new id
-    var raw = await db.rawInsert(
-        "INSERT Into Eintrag (id,minus,amount,category,usage,date)"
-        " VALUES (?,?,?,?,?,?)",
-        [
-          id,
-          newEintrag.minus,
-          newEintrag.amount,
-          newEintrag.category,
-          newEintrag.usage,
-          newEintrag.date
-        ]);
+      final db = await database;
+      //get the biggest id in the table
+      var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Eintrag");
+      int id = table.first["id"];
+      //insert to the table using the new id
+      var raw = await db.rawInsert(
+          "INSERT Into Eintrag (id,minus,amount,category,usage,date)"
+              " VALUES (?,?,?,?,?,?)",
+          [
+            id,
+            newEintrag.minus,
+            newEintrag.amount,
+            newEintrag.category,
+            newEintrag.usage,
+            newEintrag.date
+          ]);
     return raw;
   }
 
@@ -85,12 +85,13 @@ class DBProvider {
         res.isNotEmpty ? res.map((c) => Eintrag.fromMap(c)).toList() : [];
     return list;
   }
-
+  //Löschen eines Eintrags
   deleteClient(int id) async {
     final db = await database;
     return db.delete("Eintrag", where: "id = ?", whereArgs: [id]);
   }
 
+  //Löschen aller Einträge
   deleteAll() async {
     final db = await database;
    // db.rawDelete("Delete * from Eintrag");
