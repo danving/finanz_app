@@ -135,6 +135,14 @@ class _ResetScreenState extends State<ResetScreen> {
                         color: Colors.teal,
                       ),
                     ),
+                    Text(
+                      "Icons by iconmonstr.com",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.teal,
+                      ),
+                    )
+
                   ],
                 ),
               ),

@@ -143,6 +143,13 @@ class _InitializationScreenState extends State<InitializationScreen> {
                         color: Colors.teal,
                       ),
                     ),
+                    Text(
+                      "Icons by iconmonstr.com",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.teal,
+                      ),
+                    )
                   ],
                 ),
               ),
