@@ -1,4 +1,5 @@
 import 'package:finanz_app/model/alertDialog.dart';
+import 'package:finanz_app/model/data_model.dart';
 import 'package:finanz_app/model/database.dart';
 import 'package:finanz_app/model/eintrag.dart';
 import 'package:finanz_app/screens/home_screen.dart';
@@ -30,130 +31,133 @@ class _InitializationScreenState extends State<InitializationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: appBarWidget("Hoffentlich Reichts", false),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          child: Column(
-            //Vorstellungstext
-            children: <Widget>[
-              Text(
-                "Hoffentlich Reichts",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.teal,
+    return WillPopScope(
+      onWillPop: DataModel().onWillPop,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: appBarWidget("Hoffentlich Reichts", false),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Column(
+              //Vorstellungstext
+              children: <Widget>[
+                Text(
+                  "Hoffentlich Reichts",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.teal,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 10, left: 10, right: 10),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Danke fürs Herunterladen unserer App 'Hoffentlich Reicht's. Die App soll dir helfen deine Finanzen, "
-                      "mit allen  möglichen Ausgaben, im Überblick zu behalten. Im besten Fall soll sie dir sogar helfen am Ende "
-                      "des Monats noch genügend Geld auf dem Konto zu haben, sodass du dich nicht nur von Nudeln mit Ketchup "
-                      "ernähren musst. Viel Erfolg damit!",
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 10, left: 10, right: 10),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Danke fürs Herunterladen unserer App 'Hoffentlich Reicht's. Die App soll dir helfen deine Finanzen, "
+                        "mit allen  möglichen Ausgaben, im Überblick zu behalten. Im besten Fall soll sie dir sogar helfen am Ende "
+                        "des Monats noch genügend Geld auf dem Konto zu haben, sodass du dich nicht nur von Nudeln mit Ketchup "
+                        "ernähren musst. Viel Erfolg damit!",
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, right: 20, left: 20),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Nun musst du nur noch deinen Kontostand initialisieren und dann kannst du loslegen:",
-                      textAlign: TextAlign.justify,
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, right: 20, left: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Nun musst du nur noch deinen Kontostand initialisieren und dann kannst du loslegen:",
+                        textAlign: TextAlign.justify,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              //Textfeld für Eingabe des Kontostandes
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      maxLength: 7,
-                      inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
-                      keyboardType: TextInputType.number,
-                      controller: _initKonto,
-                      autofocus: false,
-                      cursorColor: Colors.teal[900],
-                      decoration: InputDecoration(
-                        labelText: "Initial-Kontostand",
-                        hintText: "100.00",
-                        labelStyle: TextStyle(color: Colors.black),
-                        border: OutlineInputBorder(),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.teal[900],
+                //Textfeld für Eingabe des Kontostandes
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        maxLength: 7,
+                        inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9.]"))],
+                        keyboardType: TextInputType.number,
+                        controller: _initKonto,
+                        autofocus: false,
+                        cursorColor: Colors.teal[900],
+                        decoration: InputDecoration(
+                          labelText: "Initial-Kontostand",
+                          hintText: "100.00",
+                          labelStyle: TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.teal[900],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              //Button zum Übernehmen des eingegebenen Kontostandes
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FlatButton(
-                  child: Text("Kontostand übernehmen"),
-                  color: Colors.teal[50],
-                  onPressed: () async {
-                    //Erstellung eines Eintrags in der Datenbank
-                    Eintrag tempEintrag = new Eintrag(
-                        true,
-                        num.parse(_initKonto.text),
-                        "Initialisierung",
-                        "Initialisierung",
-                        DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
-                    await DBProvider.db.newEintrag(tempEintrag);
+                //Button zum Übernehmen des eingegebenen Kontostandes
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlatButton(
+                    child: Text("Kontostand übernehmen"),
+                    color: Colors.teal[50],
+                    onPressed: () async {
+                      //Erstellung eines Eintrags in der Datenbank
+                      Eintrag tempEintrag = new Eintrag(
+                          true,
+                          num.parse(_initKonto.text),
+                          "Initialisierung",
+                          "Initialisierung",
+                          DateFormat('dd.MM.yyyy kk:mm').format(DateTime.now()));
+                      await DBProvider.db.newEintrag(tempEintrag);
 
-                    await AlertDialogs().isBrokeToSP();//Speichern von Elementen in Shared Preferences
-                    await AlertDialogs().compareToSP();//Speichern von Elementen in Shared Preferences
-                    setState(() {
-                      _initKonto.clear();
-                    });
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
-                  },
+                      await AlertDialogs().isBrokeToSP();//Speichern von Elementen in Shared Preferences
+                      await AlertDialogs().compareToSP();//Speichern von Elementen in Shared Preferences
+                      setState(() {
+                        _initKonto.clear();
+                      });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()));
+                    },
+                  ),
                 ),
-              ),
-              Spacer(),
-              Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Created by Andreas Enns & Dan Vi Nguyen",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.teal,
+                Spacer(),
+                Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Created by Andreas Enns & Dan Vi Nguyen",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Icons by iconmonstr.com",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.teal,
-                      ),
-                    )
-                  ],
+                      Text(
+                        "Icons by iconmonstr.com",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.teal,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

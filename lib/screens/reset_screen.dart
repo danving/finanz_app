@@ -142,7 +142,6 @@ class _ResetScreenState extends State<ResetScreen> {
                         color: Colors.teal,
                       ),
                     )
-
                   ],
                 ),
               ),
@@ -159,7 +158,9 @@ class _ResetScreenState extends State<ResetScreen> {
       //Löschen des Bilderordners
       Directory dirToDel = await getApplicationDocumentsDirectory();
       dirToDel = Directory('${dirToDel.path}/images');
-      dirToDel.deleteSync(recursive: true);
+      if (await dirToDel.exists()) {
+        dirToDel.deleteSync(recursive: true);
+      }
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => InitializationScreen()));
     }

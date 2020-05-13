@@ -34,7 +34,8 @@ class _CameraScreenState extends State<CameraScreen> {
               height: MediaQuery.of(context).size.height - 160,
               child: FutureBuilder<List>(
                   future: _listofFiles(),
-                  builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<List> snapshot) {
                     if (snapshot.hasData) {
                       return showGallery(snapshot);
                     } else {
