@@ -35,7 +35,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
       onWillPop: DataModel().onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBarWidget("Hoffentlich Reichts", false),
+        appBar: appBarWidget("Hoffentlich Reicht's", false),
         body: Container(
           child: Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -43,7 +43,7 @@ class _InitializationScreenState extends State<InitializationScreen> {
               //Vorstellungstext
               children: <Widget>[
                 Text(
-                  "Hoffentlich Reichts",
+                  "Hoffentlich Reicht's",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 28,

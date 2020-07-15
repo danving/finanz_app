@@ -36,7 +36,7 @@ class _ResetScreenState extends State<ResetScreen> {
           child: Column(
             children: <Widget>[
               Text(
-                "Hoffentlich Reichts",
+                "Hoffentlich Reicht's",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 28,

@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false, // Used for removing back buttoon.
-          title: Text("Hoffentlich Reichts"),
+          title: Text("Hoffentlich Reicht's"),
           backgroundColor: Colors.teal,
           actions: <Widget>[
             IconButton(
